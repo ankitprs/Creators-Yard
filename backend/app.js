@@ -3,12 +3,17 @@ import express from 'express';
 import path from 'path';
 import cookieParser from 'cookie-parser';
 import logger from 'morgan';
+import cors from 'cors';
 
+import dotenv from 'dotenv'
+dotenv.config()
+
+import mongoose from './config/config.js';
 import userRouter from './routes/user.js'
 import videoRouter from './routes/video.js'
 import channelRouter from './routes/channel.js'
-import cors from 'cors';
-import mongoose from './config/config.js';
+
+
 
 const app = express();
 

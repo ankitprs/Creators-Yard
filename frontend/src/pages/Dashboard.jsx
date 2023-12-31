@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { VideoCard } from '../components';
 import { useNavigate, useParams } from 'react-router-dom';
-import apiService from '../aws/data'
+import apiService from '../gcp/data'
 import { FaCloudUploadAlt } from "react-icons/fa";
 import AddEditor from '../components/AddEditor'
 
@@ -38,7 +38,7 @@ const Dashboard = () => {
           </p>
         </div>
         {videos.map((video_) => (
-          <div onClick={() => navigator(`/video/${video_.id}`)} key={video_.id} className="mb-4">
+          <div onClick={() => navigator(`/dashboard/video/${video_.id}`)} key={video_.id} className="mb-4">
             <VideoCard video={video_} />
           </div>
         ))}

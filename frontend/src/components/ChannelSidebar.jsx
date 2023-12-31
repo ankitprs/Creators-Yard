@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import ChannelCard from './ChannelCard';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import apiService from '../aws/data.js';
+import apiService from '../gcp/data.js';
 
 
 function ChannelSidebar() {
@@ -48,7 +48,7 @@ function ChannelSidebar() {
         </div>
       </a>
       {channels.map((channel) => (
-        <div onClick={() => navigator(`/channel/${channel.id}`)} key={channel.id} className="mb-2" t>
+        <div onClick={() => navigator(`/dashboard/channel/${channel.id}`)} key={channel.id} className="mb-2" t>
           <ChannelCard channel={channel} />
         </div>
       ))}

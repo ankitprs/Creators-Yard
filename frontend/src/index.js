@@ -1,16 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
-import { AuthLayout } from './components';
-import { LandingPage, Login, UploadPage, VideoPage } from './pages';
+import reportWebVitals from './reportWebVitals';
+
 import store from './store/store';
 import { Provider } from 'react-redux'
-import Dashboard from './pages/Dashboard';
-import EditorList from './pages/Editors';
-import Callback from './pages/Callback'
+
+import './index.css';
+import App from './App';
+import { AuthLayout } from './components';
+import { LandingPage, Login, UploadPage, VideoPage, Dashboard, EditorList, Callback, TermsAndConditions, PrivacyPolicy, RefundPolicy } from './pages';
+
 
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
@@ -109,6 +109,18 @@ const router = createBrowserRouter([
   //     }
   //   ]
   // },
+  {
+    path: '/Terms-of-Service',
+    element: (<TermsAndConditions />)
+  },
+  {
+    path: '/Privacy-Policy',
+    element: <PrivacyPolicy />
+  },
+  {
+    path: '/Refund-Policy',
+    element: <RefundPolicy />
+  },
   {
     path: '*',
     element: <div>404 Not Found</div>

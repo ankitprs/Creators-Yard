@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import apiService from '../aws/data';
+import apiService from '../gcp/data';
 import { FcProcess } from "react-icons/fc";
 
 

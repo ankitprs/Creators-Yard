@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import EditorCard from '../components/EditorCard';
 import { FaPlus } from 'react-icons/fa';
-import apiService from '../aws/data';
+import apiService from '../gcp/data';
 import { useNavigate, useParams } from 'react-router-dom';
 import AddEditor from '../components/AddEditor'
 

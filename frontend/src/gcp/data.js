@@ -1,5 +1,6 @@
 import axios from 'axios';
 import authService from './auth';
+import { hover } from '@testing-library/user-event/dist/hover';
 const HOST_URL = "http://localhost:3002/api/v0"
 const videoThumbnail1 = "https://img.youtube.com/vi/Nnd6PCkXw30/maxresdefault.jpg"
 const videoThumbnail2 = 'https://img.youtube.com/vi/e_pYhINF93Q/maxresdefault.jpg'
@@ -13,11 +14,23 @@ class APIService {
 
   // GET Requests
   getChannels = async (user_email_id) => {
-    const channels = [
-      { id: '1', name: 'Harkirat Singh', iconUrl: icon_url2 },
-      { id: '2', name: 'Youtube hub', iconUrl: icon_url1 },
-    ];
-    return channels;
+    const endpoint = `${hover}/channel/list_channels`
+    const requestBody = {
+      email_id: user_email_id
+    }
+    try {
+      const response = await axios.post(endpoint, requestBody)
+      return response
+    } catch (err) {
+      console.log(err);
+      return [];
+    }
+
+    // const channels = [
+    //   { id: '1', name: 'Harkirat Singh', iconUrl: icon_url2 },
+    //   { id: '2', name: 'Youtube hub', iconUrl: icon_url1 },
+    // ];
+    // return channels;
   }
   getEditorsList = async (channel_id, user_email_id) => {
     return [

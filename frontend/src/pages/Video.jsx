@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import apiService from '../aws/data';
+import apiService from '../gcp/data';
 import { useParams } from 'react-router-dom'
 import ReactPlayer from 'react-player'
 

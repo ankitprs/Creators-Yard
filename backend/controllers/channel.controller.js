@@ -1,6 +1,8 @@
 import Channel from '../models/channel.model.js'
 import mailService from '../services/mailService.js'
 import youtubeApiService from '../services/youtubeApiService.js'
+import dotenv from 'dotenv'
+dotenv.config()
 
 class ChannelDataController {
   getChannelForUser = async (req, res) => {

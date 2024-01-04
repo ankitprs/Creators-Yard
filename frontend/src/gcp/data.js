@@ -2,8 +2,6 @@ import axios from 'axios';
 import authService from './auth';
 import { auth } from '../conf/conf';
 const HOST_URL = "http://localhost:3002/api/v0"
-const videoThumbnail1 = "https://img.youtube.com/vi/Nnd6PCkXw30/maxresdefault.jpg"
-const videoThumbnail2 = 'https://img.youtube.com/vi/e_pYhINF93Q/maxresdefault.jpg'
 const icon_url1 = "https://yt3.googleusercontent.com/ytc/APkrFKYL_GdO9ss5jGkRtiuavwTl1PmYIF-UK6YlzISXiA=s176-c-k-c0x00ffffff-no-rj"
 const icon_url2 = "https://yt3.ggpht.com/MeY_fGNrjVLV0PVOBN7dRWzMBS0y41YGm55LOaJ02cXV82a7Np9pYxxhHFqdYdncEy1I2cYR=s176-c-k-c0x00ffffff-no-rj-mo"
 
@@ -65,25 +63,12 @@ class APIService {
     }
     try {
       const response = await axios.get(endpoint, params_parameter)
+      console.log(response.data);
       return response.data
     } catch (err) {
       console.log(err);
       return [];
     }
-    return [
-      {
-        email_id: "user@gmail.com",
-        icon_url: icon_url1
-      },
-      {
-        email_id: "ankit@gmail.com",
-        icon_url: icon_url2
-      },
-      {
-        email_id: "raju@gmail.com",
-        icon_url: icon_url1
-      },
-    ]
   }
 
   getVideosForChannel = async (channel_id, user_email_id) => {
@@ -136,6 +121,7 @@ class APIService {
       return err;
     }
   }
+
   createChannel = async (authorization_code) => {
     const requestData = {
       authorization_code: authorization_code,
@@ -150,12 +136,25 @@ class APIService {
   }
 
 
-  addEditors = async (channel_id, editor_mail_id) => {
+  addEditors = async (channel_id, editor_email_id) => {
     const requestData = {
       channel_id: channel_id,
-      editor_mail_id: editor_mail_id
+      editor_email_id: editor_email_id
     }
-    const apiUrl = HOST_URL + `/channel/${channel_id}/addEditor`
+    const apiUrl = HOST_URL + `/channel/add_editors`
+    axios.post(apiUrl, requestData).then(res => {
+      console.log('Response:', res.data);
+    }).catch(error => {
+      console.error('Error:', error);
+    });
+  }
+
+  removeEditors = async (channel_id, editor_email_id) => {
+    const requestData = {
+      channel_id: channel_id,
+      editor_email_id: editor_email_id
+    }
+    const apiUrl = HOST_URL + `/channel/remove_editors`
     axios.post(apiUrl, requestData).then(res => {
       console.log('Response:', res.data);
     }).catch(error => {
@@ -184,9 +183,9 @@ class APIService {
   }
   // === PUBLISH VIDEO  === 
   publishVideoToYT = async (video_id, user_email_id) => {
-    const apiUrl = HOST_URL + `/publish/publish`
     const requestBody = { video_id: video_id, email_id: user_email_id };
 
+    const apiUrl = HOST_URL + `/channel/publish`
     axios.post(apiUrl, requestBody).then(response => {
       console.log('Response:', response.data);
     }).catch(error => {

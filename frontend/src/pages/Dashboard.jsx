@@ -30,7 +30,7 @@ const Dashboard = () => {
       <div className="p-4">
         <div className='flex'>
           <button className='w-full m-1 h-10 mb-4 bg-blue-500 rounded-lg' onClick={() => { setOpen(true) }}>Add Editors</button>
-          <button className='w-full m-1 h-10 mb-4 bg-gray-300 rounded-lg' onClick={() => navigator(`dashboard/channel/${channel_id}/editors`)}>All Editors</button>
+          <button className='w-full m-1 h-10 mb-4 bg-gray-300 rounded-lg' onClick={() => navigator(`/dashboard/channel/${channel_id}/editors`)}>All Editors</button>
         </div>
         {open ? <AddEditor handleOpen={handleOpen} /> : <></>}
         <div className="mb-3 w-full max-w-sm bg-gray-900 text-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300" onClick={() => navigator(`/dashboard/${channel_id}/upload`)}>

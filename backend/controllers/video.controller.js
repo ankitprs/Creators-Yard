@@ -1,5 +1,4 @@
 import Video from '../models/video.model.js';
-import AWS from 'aws-sdk';
 
 
 class VideoController {
@@ -37,19 +36,7 @@ class VideoController {
   }
 
   getPresigninUrl = async (video_id) => {
-    var credentials = {
-      accessKeyId: process.env.S3_ACCESS_KEY,
-      secretAccessKey: process.env.S3_SECRET_KEY
-    };
-    AWS.config.update({ credentials: credentials, region: 'us-east-1' });
-    var s3 = new AWS.S3();
-
-    var presignedURL = s3.putSignedUrl('getObject', {
-      Bucket: 'channel_nest',
-      Key: `${video_id}.mp4`, //filename
-      Expires: 10000 //time to expire in seconds
-    });
-    return presignedGETURL
+    return "presignedGETURL"
   }
 }
 const videoController = new VideoController;

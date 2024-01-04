@@ -14,7 +14,7 @@ router.post('/remove_editors', auth, isOwner, ChannelController.removeEditorFrom
 router.get('/list_editors', auth, isOwner, ChannelController.getListOfEditors);
 router.get('/list_channels', auth, ChannelController.getChannelForUser);
 
-router.get('/owner_email_id', auth, isEditor, function (req, res, next) {
+router.get('/owner_email_id', auth, isEditor, function (req, res) {
   res.render('index', { title: 'Express' });
 });
 

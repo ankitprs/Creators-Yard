@@ -3,6 +3,7 @@ import { toggleSidebar } from '../../store/uiSlice';
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom';
 import authService from '../../gcp/auth'
+import LogoIcon from "../../assets/creactors_yard.png"
 
 const Navbar = () => {
   const [user, setUser] = useState(null);

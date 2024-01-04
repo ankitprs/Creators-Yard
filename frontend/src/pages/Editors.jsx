@@ -8,28 +8,34 @@ import AddEditor from '../components/AddEditor'
 
 
 const EditorList = () => {
-  const channel_id = useParams()
+  const { channel_id } = useParams()
   const [editors, setEditors] = useState([]);
   const [open, setOpen] = useState(false);
 
   const handleOpen = (bool_val, email_id) => {
     setOpen(bool_val)
     apiService.addEditors(channel_id, email_id)
+    handleAddEditor(email_id)
   };
 
   useEffect(() => {
-    apiService.getEditorsList("", "").then((edits) => {
-      setEditors(edits)
+    apiService.getEditorsList(channel_id, "ankitprasad.119@gmail.com").then((edits) => {
+      if (!edits || !edits[0]) return
+      setEditors(edits[0].editors_email_id)
     })
   }, [])
 
-  const handleAddEditor = () => {
-    const newEditor = `Editor ${editors.length + 1}`;
-    setEditors([...editors, newEditor]);
+  const handleAddEditor = (email_id) => {
+    setEditors([...editors, email_id]);
   };
 
   const handleRemoveEditor = (editor_email_id) => {
-    const updatedEditors = editors.filter((_, i) => i !== editor_email_id);
+    apiService.removeEditors(channel_id, editor_email_id).then(() => {
+      console.log("Successfull");
+    }).catch((err) => {
+      console.log(err);
+    })
+    const updatedEditors = editors.filter((val) => val !== editor_email_id);
     setEditors(updatedEditors);
   };
 
@@ -44,12 +50,12 @@ const EditorList = () => {
       </button>
       {open ? <AddEditor handleOpen={handleOpen} /> : <></>}
 
-      {editors.map((editor, index) => (
+      {editors.map((editor_email_id, index) => (
         <EditorCard
           key={index}
-          name={editor.email_id}
-          icon_url={editor.icon_url}
-          onRemove={() => handleRemoveEditor(editor.email_id)}
+          name={editor_email_id}
+          icon_url={editor_email_id}
+          onRemove={() => handleRemoveEditor(editor_email_id)}
         />
       ))}
     </div>

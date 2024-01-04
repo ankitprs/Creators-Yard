@@ -25,7 +25,8 @@ const VideoPage = () => {
   }, [])
 
   const publishVideo = async (video_id) => {
-    apiService.publishVideoToYT(video_id, "ankitprasad.119@gmail.com");
+    console.log('called');
+    await apiService.publishVideoToYT(video_id, "ankitprasad.119@gmail.com");
   }
 
   const videoSrc = {

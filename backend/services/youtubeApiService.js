@@ -69,9 +69,12 @@ class YoutubeApiService {
     return null;
   }
 
-  publishVideo = async (title, description, access_token, signedUrl) => {
+  publishVideo = async (title, description, refresh_token, signedUrl) => {
     try {
+      const access_token = await refreshToken(refresh_token);
+
       const stream = got.stream(signedUrl);
+
       const headers = {
         'Authorization': `Bearer ${access_token}`,
       };
@@ -91,7 +94,7 @@ class YoutubeApiService {
         },
         part: "snippet, status",
         media: {
-          mediaType: "video/mov",
+          mediaType: "video/mp4",
           body: stream,
         }
       });

@@ -1,4 +1,6 @@
 import React from 'react'
+import LogoIcon from "../../assets/creactors_yard.png"
+
 
 function Footer() {
   return (

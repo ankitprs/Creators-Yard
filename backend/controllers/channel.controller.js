@@ -1,6 +1,9 @@
 import Channel from '../models/channel.model.js'
 import mailService from '../services/mailService.js'
 import youtubeApiService from '../services/youtubeApiService.js'
+import Video from '../models/video.model.js';
+import gcpService from '../services/gcpService.js'
+
 import dotenv from 'dotenv'
 dotenv.config()
 
@@ -44,7 +47,7 @@ class ChannelDataController {
     const { channel_id, editor_email_id } = req.body;
     try {
       const editors = await Channel.updateOne({ channel_id: channel_id }, {
-        $pullAll: {
+        $pull: {
           editors_email_id: editor_email_id
         }
       })
@@ -86,12 +89,16 @@ class ChannelDataController {
   }
 
 
-  // @TODO
+  //  @ Main Section
   publishVideo = async (req, res) => {
-
-    const { YOUTUBE_VIDEO_TITLE, YOUTUBE_VIDEO_DESCRIPTION, S3_VIDEO_KEY, access_token } = req.body
+    const { video_id, email_id } = req.body
     try {
-      const respo = await youtubeApiService.publishVideo(S3_VIDEO_KEY, YOUTUBE_VIDEO_TITLE, YOUTUBE_VIDEO_DESCRIPTION, access_token);
+      const video = await Video.findOne({ video_id: video_id });
+      const channel = await Channel.findOne({ channel_id: video.channel_id }, { refresh_token: 1, owner_email_id: 1 })
+      if (owner_email_id !== email_id) return res.send({ eror: "unauth user" })
+
+      const signedUrl = await gcpService.generateSignedUrl(video.video_ref)
+      const respo = await youtubeApiService.publishVideo(video.title, video.description, channel.refresh_token, signedUrl);
       res.send(respo)
     } catch (error) {
       res.send({ error: `Error ${error}` })

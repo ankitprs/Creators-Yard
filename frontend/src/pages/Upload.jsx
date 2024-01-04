@@ -1,15 +1,22 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import UploadPopup from '../components/UploadPopup';
-import axios from 'axios'
+import { storage } from '../conf/conf'
+import { ref, getDownloadURL, uploadBytesResumable } from "firebase/storage";
+import apiService from '../gcp/data';
+import { v4 as uuidv4 } from 'uuid';
+import { useParams } from 'react-router-dom';
+
 
 const UploadPage = () => {
   const [videoSrc, setVideoSrc] = useState(null);
   const [file, setFile] = useState(null);
+  const [videoId, setVideoId] = useState("")
   const [title, setTitle] = useState("")
   const [description, setDescription] = useState("")
   const [progressbar, setProgressbar] = useState(false)
-  const [uploadProgress, setUploadProgress] = useState(0)
-  const [fileTotal, setfileTotal] = useState(0)
+  const [progresspercent, setProgresspercent] = useState(0);
+  const { channel_id } = useParams()
+
 
   const handleFileChange = (event) => {
     const file = event.target.files?.[0];
@@ -20,31 +27,43 @@ const UploadPage = () => {
     }
   };
 
-  const uploadVideo = async () => {
+  useEffect(() => {
+    setVideoId(uuidv4())
+  }, [file])
+
+
+  const handleSubmit = async (e) => {
     setProgressbar(true)
     console.log("Called Upload");
-    if (file != null) {
-      console.log("file found");
-      const config = {
-        onUploadProgress: (data) => {
-          setfileTotal(data.total)
-          setUploadProgress(data.loaded)
-        },
-      }
-      let presignedUrl = ""
-      const response = await axios.put(presignedUrl, {
-        file: file
-      }, config)
-      if (response.status === 200) {
-        setProgressbar(false);
-      } else {
-        setProgressbar(false)
-        throw new Error('Upload failed');
-      }
 
-    } else {
-      console.log("file is null");
-    }
+    if (!file) return;
+
+    const storageRef = ref(storage, `videos/${channel_id}/${videoId}`);
+    const uploadTask = uploadBytesResumable(storageRef, file);
+
+    uploadTask.on("state_changed",
+      (snapshot) => {
+        const progress =
+          Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
+        setProgresspercent(progress);
+      },
+      (error) => {
+        alert(error);
+      },
+      () => {
+
+        apiService.createUploadVideo(channel_id, videoId, title, description, "ankitprasad.119@gmail.com").then(() => {
+          setProgressbar(false);
+
+        }).catch(() => {
+          setProgressbar(false);
+        })
+
+        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+          console.log(`downloadURL ${downloadURL}`);
+        });
+      }
+    );
   }
 
   return (
@@ -52,7 +71,7 @@ const UploadPage = () => {
       {/* Title */}
       <h1 className="text-3xl font-bold mb-6">Upload Video For YouTube</h1>
       {/* <UploadPopup /> */}
-      {progressbar ? <UploadPopup uploadProgress={uploadProgress} fileTotal={fileTotal} /> : <></>}
+      {progressbar ? <UploadPopup progresspercent={progresspercent} /> : <></>}
 
       {/* Drag & Drop Video Upload */}
       <div className="w-full max-w-md p-6 border-4 border-dashed border-gray-600 rounded-lg mb-6 relative">
@@ -94,7 +113,7 @@ const UploadPage = () => {
       />
 
       {/* Send to Creator Button */}
-      <button className="w-full max-w-md h-14 bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-5 rounded-xl" onClick={uploadVideo}>
+      <button className="w-full max-w-md h-14 bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-5 rounded-xl" onClick={handleSubmit}>
         Send the video to creator
       </button>
     </div>

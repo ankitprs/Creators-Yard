@@ -27,14 +27,10 @@ class VideoController {
   uploadVideo = async (req, res) => {
     const { channel_id, video_id, title, description, email_id } = req.body;
     try {
-      const video_s3_url = `/videos/${channel_id}/${video_id}`
-      const newVideo = new Video({ video_id, channel_id, title, description, video_s3_url, email_id })
+      const video_ref = `/videos/${channel_id}/${video_id}`
+      const newVideo = new Video({ video_id, channel_id, title, description, video_ref, email_id })
       const savedVideo = await newVideo.save();
-      const presignedPutUrl = await getPresigninUrl(video_id)
-      res.json({
-        presignedPutUrl: presignedPutUrl,
-        savedVideo: savedVideo
-      });
+      res.json(savedVideo);
     } catch (error) {
       res.status(400).json({ message: error.message });
     }

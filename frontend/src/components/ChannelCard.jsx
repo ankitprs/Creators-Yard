@@ -7,13 +7,13 @@ const ChannelCard = ({ channel }) => {
         <div className="flex-shrink-0">
           <img
             className="w-8 h-8 rounded-full"
-            src={channel.iconUrl}
+            src={channel.channel_icon_url}
             alt="Neil image"
           />
         </div>
         <div className="flex-1 min-w-0">
           <p className="text-sm font-medium  truncate text-white">
-            {channel.name}
+            {channel.channel_name}
           </p>
         </div>
       </div>

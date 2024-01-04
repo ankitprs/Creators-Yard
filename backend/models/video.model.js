@@ -6,7 +6,7 @@ const videoSchema = new mongoose.Schema({
   channel_id: { type: String, required: true },
   title: { type: String, required: true },
   description: { type: String, required: true },
-  video_s3_url: { type: String, required: true },
+  video_ref: { type: String, required: true },
   email_id: { type: String, required: true },
 })
 

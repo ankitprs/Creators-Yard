@@ -8,6 +8,7 @@ import EditorList from "./Editors";
 import TermsAndConditions from './TermsAndConditions'
 import RefundPolicy from './RefundPolicy'
 import PrivacyPolicy from "./PrivacyPolicy";
+import CustomerSupport from './CustomerSupport'
 
 export {
   Callback,
@@ -19,5 +20,6 @@ export {
   Dashboard,
   TermsAndConditions,
   RefundPolicy,
-  PrivacyPolicy
+  PrivacyPolicy,
+  CustomerSupport
 }

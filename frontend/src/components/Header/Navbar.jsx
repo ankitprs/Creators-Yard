@@ -2,11 +2,10 @@ import React, { useState, useRef, useEffect } from 'react';
 import { toggleSidebar } from '../../store/uiSlice';
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom';
+import authService from '../../gcp/auth'
 
 const Navbar = () => {
   const [user, setUser] = useState(null);
-  const [picture, setPicture] = useState("");
-  const [name, setName] = useState("");
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
   const dispatch = useDispatch()
@@ -18,17 +17,13 @@ const Navbar = () => {
       setIsOpen(false);
     }
   };
-
+  async function fetchUser() {
+    const currUser = await authService.getCurrentUser();
+    console.log(currUser);
+    setUser({ name: currUser?.name, picture: currUser?.icon_url });
+  }
   useEffect(() => {
-    async function fetchUser() {
-      try {
-        const currUser = null;
-        setUser(currUser);
-        console.log(currUser);
-        // setName(user.attributes.name);
-        // setPicture(user?.attributes.picture);
-      } catch (err) { }
-    }
+
     fetchUser()
     document.addEventListener('mousedown', handleClickOutside);
     return () => {
@@ -41,7 +36,7 @@ const Navbar = () => {
   }
   function onClickLogout() {
     try {
-      // Auth.signOut({ global: true });
+      authService.logout()
     } catch (error) {
       console.log('error signing out: ', error);
     }
@@ -81,16 +76,13 @@ const Navbar = () => {
 
 
         <div className="relative" ref={dropdownRef}>
-          <div className='flex'>
-            <button onClick={() => navigator('/upload')} className='bg-blue-600 rounded-lg px-2.5 py-1.5 mx-3
-            '>Upload</button>
+          <div className='flex' onClick={() => setIsOpen(!isOpen)}>
+            <span className="text-white mx-3 text-center h-8">{user?.name}</span>
             <button
               className="w-8 h-8 bg-gray-700 rounded-full flex items-center justify-center"
-              onClick={() => setIsOpen(!isOpen)}
             >
-              <img src={picture} alt="Profile" className="w-8 h-8 rounded-full mr-2" />
-              {/* <i className="fas fa-user mr-2 text-white"></i> */}
-              {/* <span className="text-white">John Doe</span> */}
+              <img src={user?.picture} alt="Profile" className="w-8 h-8 rounded-full" />
+
             </button>
           </div>
 

@@ -1,6 +1,6 @@
 import axios from 'axios';
 import authService from './auth';
-import { hover } from '@testing-library/user-event/dist/hover';
+import { auth } from '../conf/conf';
 const HOST_URL = "http://localhost:3002/api/v0"
 const videoThumbnail1 = "https://img.youtube.com/vi/Nnd6PCkXw30/maxresdefault.jpg"
 const videoThumbnail2 = 'https://img.youtube.com/vi/e_pYhINF93Q/maxresdefault.jpg'
@@ -12,27 +12,64 @@ const UserEmail_Id = "ankitprasad.119@gmail.com"
 
 class APIService {
 
+  authoriztedCall = async (REQUEST_TYPE, requestBody, endpoint) => {
+    try {
+      const token = await auth.currentUser.getIdToken
+      const url = process.env.REACT + endpoint
+      if (REQUEST_TYPE == 'POST') {
+        const res = await axios.post(url, requestBody, {
+          headers: { authorization: `Bearer ${token}` }
+        })
+
+        return res;
+      } else {
+        //   const res = await axios.get(url, {
+        //     { authorization: `Bearer ${token}` }
+        //   })
+
+        // return res;
+      }
+    } catch (error) {
+      console.log(error);
+      return null
+    }
+
+
+  }
+
   // GET Requests
+  // return type formate - {id, name, iconUrl}
   getChannels = async (user_email_id) => {
-    const endpoint = `${hover}/channel/list_channels`
-    const requestBody = {
-      email_id: user_email_id
+    const endpoint = `${HOST_URL}/channel/list_channels`
+    const params_parameter = {
+      params: {
+        email_id: user_email_id
+      }
     }
     try {
-      const response = await axios.post(endpoint, requestBody)
-      return response
+      const response = await axios.get(endpoint, params_parameter)
+      return response.data
     } catch (err) {
       console.log(err);
       return [];
     }
-
-    // const channels = [
-    //   { id: '1', name: 'Harkirat Singh', iconUrl: icon_url2 },
-    //   { id: '2', name: 'Youtube hub', iconUrl: icon_url1 },
-    // ];
-    // return channels;
   }
+
   getEditorsList = async (channel_id, user_email_id) => {
+    const endpoint = `${HOST_URL}/channel/list_editors`
+    const params_parameter = {
+      params: {
+        email_id: user_email_id,
+        channel_id: channel_id
+      }
+    }
+    try {
+      const response = await axios.get(endpoint, params_parameter)
+      return response.data
+    } catch (err) {
+      console.log(err);
+      return [];
+    }
     return [
       {
         email_id: "user@gmail.com",
@@ -48,43 +85,45 @@ class APIService {
       },
     ]
   }
+
   getVideosForChannel = async (channel_id, user_email_id) => {
-    const videos = [
-      {
-        id: '1', title: 'Complete MERN Stack Course For Beginners (Syllabus Included)', thumbnailUrl: videoThumbnail1, description: 'Buy here - https://harkirat.classx.co.in/new-cou...\n' +
-          'Use coupon code "YOUTUBE" valid for 2 days\n' +
-          '\n' +
-          'In this video, Harkirat Singh talks and takes us on a progress check of what has happened with the open-source course which he launched a few months back.\n' +
-          '\n' +
-          'Social Links\n' +
-          '\n' +
-          'https://twitter.com/kirat_tw\n' +
-          'https://linkedin.com/in/kirat-li\n' +
-          'https://www.instagram.com/kirat_ins/\n' +
-          'https://discord.com/invite/WAaXacK9bh',
-        uploadStatus: 'Processing'
-      },
-      {
-        id: '2', title: 'These Coding Projects Give You An Unfair Advantage', thumbnailUrl: videoThumbnail2, description: "In this video, we've got some awesome coding project ideas for you that can be the next million dollar businesses.\n" +
-          '\n' +
-          'Social Links\n' +
-          '\n' +
-          'https://twitter.com/kirat_tw\n' +
-          'https://linkedin.com/in/kirat-li\n' +
-          'https://www.instagram.com/kirat_ins/\n' +
-          'https://discord.com/invite/WAaXacK9bh',
-        uploadStatus: 'Published'
-      },
-    ];
-    return videos;
-  }
-  getVideoDetails = async (video_id) => {
-    return {
-      video_id: "",
-      title: "Video Title Here",
-      description: "This is the video description. It provides more details about the video content, background, and other relevant information.",
-      video_s3_url: "https://www.youtube.com/embed/zqGW6x_5N0k"
+
+    const endpoint = `${HOST_URL}/video/channel_id/${channel_id}`
+    const params_parameter = {
+      params: {
+        email_id: user_email_id,
+        channel_id: channel_id
+      }
     }
+    try {
+      const response = await axios.get(endpoint, params_parameter)
+      console.log(`video: -> ${response.data}`);
+      return response.data
+    } catch (err) {
+      console.log(err);
+      return [];
+    }
+  }
+
+  getVideoDetails = async (video_id) => {
+    const endpoint = `${HOST_URL}/video/video_id/${video_id}`
+    const params_parameter = {
+      params: {
+        video_id: video_id
+      }
+    }
+    try {
+      const response = await axios.get(endpoint, params_parameter)
+      console.log(`video: -> ${response.data}`);
+      return response.data
+    } catch (err) {
+      console.log(err);
+      return [];
+    }
+  }
+
+  getStreamableUrl = () => {
+
   }
 
   // CREATE CHANNEL 
@@ -123,14 +162,37 @@ class APIService {
       console.error('Error:', error);
     });
   }
-  createUploadableUrl = async (video_name) => {
+
+  createUploadVideo = async (channel_id, video_id, title, description, email_id) => {
+    const requestBody = { channel_id: channel_id, video_id: video_id, title: title, description: description, email_id: email_id };
+    const apiUrl = HOST_URL + `/video/upload`
+
+    axios.post(apiUrl, requestBody)
+      .then(response => {
+        console.log('Response:', response.data);
+      }).catch(error => {
+        console.error('Error:', error);
+      });
   }
+
   addVideoMetadata = async (video_id, title, description, video_s3_url, channel_id) => {
     try {
 
     } catch (error) {
 
     }
+  }
+  // === PUBLISH VIDEO  === 
+  publishVideoToYT = async (video_id, user_email_id) => {
+    const apiUrl = HOST_URL + `/publish/publish`
+    const requestBody = { video_id: video_id, email_id: user_email_id };
+
+    axios.post(apiUrl, requestBody).then(response => {
+      console.log('Response:', response.data);
+    }).catch(error => {
+      console.error('Error:', error);
+    });
+
   }
 }
 

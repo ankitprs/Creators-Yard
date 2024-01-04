@@ -1,72 +1,50 @@
-import conf from '../conf/conf'
-import { getAuth, signOut, GoogleAuthProvider, signInWithPopup } from 'firebase/auth'
+import { auth, provider } from "../conf/conf";
+import { signInWithPopup, signOut } from "firebase/auth";
 
-const paymentURL = "https://buy.stripe.com/test_28o9BdgGYbFQfMkcMM"
 
 export class AuthService {
 
-  auth = null
-
-  // constructor() {
-  //   this.auth = getAuth();
-  // }
-
+  // return - user or null 
   async login() {
     try {
-      const provider = new GoogleAuthProvider()
-      signInWithPopup(this.auth, provider)
-        .then((result) => {
-          // This gives you a Google Access Token. You can use it to access the Google API.
-          const credential = GoogleAuthProvider.credentialFromResult(result);
-          const token = credential.accessToken;
-          // The signed-in user info.
-          const user = result.user;
-          // IdP data available using getAdditionalUserInfo(result)
-          // ...
-        }).catch((error) => {
-          // Handle Errors here.
-          const errorCode = error.code;
-          const errorMessage = error.message;
-          // The email of the user's account used.
-          const email = error.customData.email;
-          // The AuthCredential type that was used.
-          const credential = GoogleAuthProvider.credentialFromError(error);
-          // ...
-        });
+      const result = await signInWithPopup(auth, provider)
+      console.log(result.user);
+      return result.user;
     } catch (error) {
-      throw error;
+      console.log("Firebase Service :: login:: error", error);
+      return null;
     }
   }
 
+  // return formate - {email_id, icon_url} or null
   async getCurrentUser() {
-    // if (!this.auth) return null
-    // const user = this.auth.currentUser;
-    // if (user) {
-    //   return user;
-    // } else {
-    //   return null;
-    // }
+    try {
+      const user = auth.currentUser;
 
-    // const user = {
-    //   email_id: "ankitprasad.119@gmail.com",
-    //   icon_url: ""
-    // }
-    // return user;
-    // try {
-    //   return
-    // } catch (error) {
-    //   console.log("Appwrite Service :: getCurrentUser:: error", error);
-    // }
-    return null;
+      return {
+        name: user.displayName,
+        email_id: user.email,
+        icon_url: user.photoURL,
+      };
+    } catch (error) {
+      console.log("Firebase Service :: getCurrentUser:: error", error);
+      return null;
+    }
   }
 
+  getPaymentUrl() {
+    return process.env.REACT_APP_PAYMENT_URL
+  }
 
+  // return formate - bool
   async logout() {
-    signOut(this.auth).then(() => {
-      // Sign-out successful.
-    }).catch((error) => {
-      // An error happened.
-    });
+    try {
+      const res = await signOut(auth)
+      return res != null ? true : false;
+    } catch (error) {
+      console.log("Firebase Service :: logout:: error", error);
+      return false;
+    }
   }
 }
 

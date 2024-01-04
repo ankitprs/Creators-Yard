@@ -6,9 +6,10 @@ dotenv.config()
 
 class ChannelDataController {
   getChannelForUser = async (req, res) => {
-    const { email_id } = req.body;
+    const { email_id } = req.query;
     try {
-      const channels = Channel.find({ owner_email_id: email_id, editors_email_id: email_id }, { channels_ids: 1, channel_icon_url: 1, channel_name: 1 })
+      const channels = await Channel.find({ editors_email_id: { $in: email_id } },
+        { channel_id: 1, channel_icon_url: 1, channel_name: 1 })
       res.json(channels);
     } catch (error) {
       res.status(500).json({ message: error.message });
@@ -16,9 +17,10 @@ class ChannelDataController {
   }
 
   getListOfEditors = async (req, res) => {
-    const { channel_id } = req.body;
+    const { channel_id, email_id } = req.query;
     try {
-      const editors = Channel.find({ channel_id: channel_id }, { editors_email_id: 1 })
+      const editors = await Channel.find({ channel_id: channel_id, editors_email_id: { $in: email_id } }, { editors_email_id: 1 })
+      console.log(`editors :-> ${editors}`);
       res.json(editors);
     } catch (error) {
       res.status(500).json({ message: error.message });
@@ -28,7 +30,7 @@ class ChannelDataController {
   addEditorFromChannel = async (req, res) => {
     const { channel_id, editor_email_id } = req.body;
     try {
-      const editors = Channel.updateOne({ channel_id: channel_id },
+      const editors = await Channel.updateOne({ channel_id: channel_id },
         { $push: { editors_email_id: editor_email_id } },
       )
       mailService.editorAddedMail(editor_email_id)
@@ -41,7 +43,7 @@ class ChannelDataController {
   removeEditorFromChannel = async (req, res) => {
     const { channel_id, editor_email_id } = req.body;
     try {
-      const editors = Channel.updateOne({ channel_id: channel_id }, {
+      const editors = await Channel.updateOne({ channel_id: channel_id }, {
         $pullAll: {
           editors_email_id: editor_email_id
         }
@@ -54,9 +56,8 @@ class ChannelDataController {
 
   // youtube call
   createChannel = async (req, res) => {
-    const { authorization_code, email_id } = req.body
-
     try {
+      const { authorization_code, email_id } = req.body
       const { tokens } = await youtubeApiService.exchangeTokenRequest(authorization_code);
       const { access_token, refresh_token, expiry_date } = tokens
       const { channel_id, channel_name, channel_icon_url } = await youtubeApiService.getChannelDetails(access_token)
@@ -67,6 +68,7 @@ class ChannelDataController {
         channel_name: channel_name,
         channel_icon_url: channel_icon_url,
         owner_email_id: email_id,
+        editors_email_id: [email_id],
         access_token: access_token,
         refresh_token: refresh_token,
         expires_in: expiry_date,

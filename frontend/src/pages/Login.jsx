@@ -21,13 +21,20 @@ const GoogleAuthButton = ({ onClick }) => {
 
 const Login = () => {
   const navigate = useNavigate()
+
+  const handleGoogleLogin = async () => {
+    const user = await authService.login()
+    if (user != null)
+      navigate('/dashboard')
+  }
+
   return (
     <div className="min-h-screen flex flex-col justify-center items-center bg-gradient-to-br from-gray-800 to-gray-900 text-white">
       <div className="p-8 rounded-xl shadow-lg bg-gray-900 max-w-6xl">
         <h1 className="mb-4 text-5xl font-extrabold text-gray-200 dark:text-white md:text-5xl lg:text-6xl"><span className="text-transparent bg-clip-text bg-gradient-to-r to-emerald-600 from-sky-400">Youtube</span> Collab.</h1>
         <p className="mb-6 text-center text-lg font-normal text-gray-400 lg:text-xl">Mange your youtube Channel with this tool.</p>
         <div className=" flex first-letter:items-center justify-center space-y-4 sm:flex sm:space-y-0 sm:space-x-4">
-          <GoogleAuthButton onClick={() => { authService.login() }} />
+          <GoogleAuthButton onClick={handleGoogleLogin} />
         </div>
       </div>
     </div>

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-const UploadPopup = ({ uploadProgress, fileTotal }) => {
+const UploadPopup = ({ progresspercent }) => {
 
   useEffect(() => {
     // const interval = setInterval(() => {
@@ -22,9 +22,8 @@ const UploadPopup = ({ uploadProgress, fileTotal }) => {
           <div className="w-16 h-16 border-t-4 border-blue-500 border-solid rounded-full animate-spin"></div>
         </div>
         <p className="text-center text-sm mb-2">
-          Uploading: {Math.round((uploadProgress / fileTotal) * 100)}%<br />
-          {uploadProgress < 100
-            ? `Uploaded: ${uploadProgress.toFixed(2)} MB / ${fileTotal} MB`
+          {progresspercent < 100
+            ? `Uploaded: ${progresspercent}%`
             : 'Upload complete!'}
         </p>
       </div>

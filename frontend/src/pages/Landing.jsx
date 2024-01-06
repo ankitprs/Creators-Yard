@@ -344,6 +344,13 @@ function Footer() {
 
         </div>
 
+        <div className="flex items-center justify-between py-4 md:py-8 border-t border-gray-200">
+          <a className='' href='/privacy-policy'>Privary Policy</a>
+          <a href='/terms-of-service'>Terms and Conditions</a>
+          <a href='/refund-policy'>Refund Policy</a>
+          <a href='https://forms.gle/icUcy2eTuZaBtuYy5'>Contact Us</a>
+        </div>
+
       </div>
     </footer>
   );

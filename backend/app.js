@@ -12,7 +12,7 @@ import mongoose from './config/config.js';
 import userRouter from './routes/user.js'
 import videoRouter from './routes/video.js'
 import channelRouter from './routes/channel.js'
-
+import paymentRouter from './routes/payment.js'
 
 
 const app = express();
@@ -30,7 +30,7 @@ app.use(cookieParser());
 app.use('/api/v0/user', userRouter);
 app.use('/api/v0/video', videoRouter);
 app.use('/api/v0/channel', channelRouter);
-
+app.use('/api/v0/payment', paymentRouter)
 
 
 // catch 404 and forward to error handler

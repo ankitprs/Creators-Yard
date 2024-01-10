@@ -2,30 +2,31 @@ import axios from 'axios';
 import authService from './auth';
 import { auth } from '../conf/conf';
 const HOST_URL = "http://localhost:3002/api/v0"
-const icon_url1 = "https://yt3.googleusercontent.com/ytc/APkrFKYL_GdO9ss5jGkRtiuavwTl1PmYIF-UK6YlzISXiA=s176-c-k-c0x00ffffff-no-rj"
-const icon_url2 = "https://yt3.ggpht.com/MeY_fGNrjVLV0PVOBN7dRWzMBS0y41YGm55LOaJ02cXV82a7Np9pYxxhHFqdYdncEy1I2cYR=s176-c-k-c0x00ffffff-no-rj-mo"
 
 const UserEmail_Id = "ankitprasad.119@gmail.com"
 
 
 class APIService {
 
-  authoriztedCall = async (REQUEST_TYPE, requestBody, endpoint) => {
+  authoriztedCall = async (REQUEST_TYPE, endpoint, requestBody, params) => {
     try {
       const token = await auth.currentUser.getIdToken
       const url = process.env.REACT + endpoint
       if (REQUEST_TYPE == 'POST') {
         const res = await axios.post(url, requestBody, {
-          headers: { authorization: `Bearer ${token}` }
+          headers: { authorization: `Bearer ${token}` },
+          params: params
         })
 
         return res;
       } else {
-        //   const res = await axios.get(url, {
-        //     { authorization: `Bearer ${token}` }
-        //   })
+        const res = await axios.get(url, {
+          headers: { authorization: `Bearer ${token}` },
+          params: params
+        }
+        )
 
-        // return res;
+        return res;
       }
     } catch (error) {
       console.log(error);

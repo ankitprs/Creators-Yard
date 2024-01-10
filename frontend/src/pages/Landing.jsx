@@ -272,7 +272,7 @@ function PricingBlock() {
 
               <div className="text-center lg:max-w-xl">
                 <h3 className="mb-2 text-4xl m-auto">Pricing</h3>
-                <h3 className=" mb-2 text-8xl m-aut p-3">$ 39<span className=' text-lg'> / Month</span></h3>
+                <h3 className=" mb-2 text-8xl m-aut p-3">₹ 3,999<span className=' text-lg'> / Month</span></h3>
 
                 <button className="w-full px-28 py-3 rounded-lg text-white bg-blue-600 hover:bg-blue-700 shadow" onClick={onClickLogin}>Join Now</button>
                 <div className='text-left p-4 my-3'>
@@ -303,20 +303,71 @@ function Footer() {
   })
 
   const onClickButton = (link) => {
+    let location_url = "";
     switch (link) {
       case site.github:
-        // code block
+        location_url = "https://github.com/ankitprs/Creators-Yard"
         break;
       case site.twitter:
-        // code block
+        location_url = "https://github.com/ankitprs/Creators-Yard"
         break;
       default:
     }
+    window.open(location_url)
   }
 
   return (
     <footer>
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
+
+        {/* Top area: Blocks */}
+        <div className="grid sm:grid-cols-8 gap-8 py-8 md:py-8 border-t border-gray-200">
+
+          {/* 2nd block */}
+          <div className="sm:col-span-6 md:col-span-3 lg:col-span-2">
+            <h6 className="text-gray-800 font-medium mb-2">Address</h6>
+            <ul className="text-sm">
+              <li className="mb-2">
+                <a href="#0" className="text-gray-600 hover:text-gray-900 transition duration-150 ease-in-out">AI/10, Adda Colony</a>
+              </li>
+              <li className="mb-2">
+                <a href="#0" className="text-gray-600 hover:text-gray-900 transition duration-150 ease-in-out">Asansol, PIN - 713302</a>
+              </li>
+              <li className="mb-2">
+                <a href="#0" className="text-gray-600 hover:text-gray-900 transition duration-150 ease-in-out">West Bengal, India</a>
+              </li>
+            </ul>
+          </div>
+
+          {/* 3rd block */}
+          <div className="sm:col-span-6 md:col-span-3 lg:col-span-2">
+            <h6 className="text-gray-800 font-medium mb-2">Policies</h6>
+            <ul className="text-sm">
+              <li className="mb-2">
+                <a href='/privacy-policy' className="text-gray-600 hover:text-gray-900 transition duration-150 ease-in-out">Privary Policy</a>
+              </li>
+              <li className="mb-2">
+                <a href="/terms-of-service" className="text-gray-600 hover:text-gray-900 transition duration-150 ease-in-out">Terms and Conditionss</a>
+              </li>
+              <li className="mb-2">
+                <a href='/refund-policy' className="text-gray-600 hover:text-gray-900 transition duration-150 ease-in-out">Refund Policy</a>
+              </li>
+
+            </ul>
+          </div>
+
+          <div className="sm:col-span-6 md:col-span-3 lg:col-span-3">
+            <h6 className="text-gray-800 font-medium mb-2">Contact Information</h6>
+            <ul>
+              <li className="mb-2">
+                <a href='https://forms.gle/icUcy2eTuZaBtuYy5' className="text-gray-600 hover:text-gray-900 transition duration-150 ease-in-out">We welcome your feedback and encourage you to get in touch with us.</a>
+              </li>
+              <li>
+                <a className="text-gray-600 hover:text-gray-900 transition duration-150 ease-in-out">Feel free to reach out to us at: ankitpr2001@gmail.com</a>
+              </li>
+            </ul>
+          </div>
+        </div>
 
         {/* Bottom area */}
         <div className="md:flex md:items-center md:justify-between py-4 md:py-8 border-t border-gray-200">
@@ -344,15 +395,8 @@ function Footer() {
 
         </div>
 
-        <div className="flex items-center justify-between py-4 md:py-8 border-t border-gray-200">
-          <a className='' href='/privacy-policy'>Privary Policy</a>
-          <a href='/terms-of-service'>Terms and Conditions</a>
-          <a href='/refund-policy'>Refund Policy</a>
-          <a href='https://forms.gle/icUcy2eTuZaBtuYy5'>Contact Us</a>
-        </div>
-
       </div>
-    </footer>
+    </footer >
   );
 }
 

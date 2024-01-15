@@ -1,12 +1,12 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { toggleSidebar } from '../../store/uiSlice';
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom';
 import authService from '../../gcp/auth'
 import LogoIcon from "../../assets/creactors_yard.png"
 
 const Navbar = () => {
-  const [user, setUser] = useState(null);
+  const user = useSelector((state) => state.userData);
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
   const dispatch = useDispatch()
@@ -19,12 +19,10 @@ const Navbar = () => {
     }
   };
   async function fetchUser() {
-    const currUser = await authService.getCurrentUser();
-    console.log(currUser);
-    setUser({ name: currUser?.name, picture: currUser?.icon_url });
+    await authService.getCurrentUser();
   }
-  useEffect(() => {
 
+  useEffect(() => {
     fetchUser()
     document.addEventListener('mousedown', handleClickOutside);
     return () => {

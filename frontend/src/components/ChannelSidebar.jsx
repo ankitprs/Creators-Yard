@@ -13,7 +13,7 @@ const ChannelSidebar = ({ channels, onAuthClick }) => {
       className={`w-64 bg-gray-800 text-white p-4 ${isSidebarOpen ? 'block' : 'hidden'
         } dark:bg-gray-900`}
     >
-      <a >
+      <a>
         <div key={0} className="mb-2">
           <button onClick={onAuthClick} className="w-48 p-2 border rounded-lg shadow-md sm:p-3 bg-gradient-to-r from-purple-500 to-indigo-600 hover:from-green-500 hover:to-blue-600 transition-colors duration-300 flex items-center space-x-4">
             <div className="flex-shrink-0">

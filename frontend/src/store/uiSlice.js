@@ -11,8 +11,11 @@ const uiSlice = createSlice({
     toggleSidebar: (state) => {
       state.isSidebarOpen = !state.isSidebarOpen;
     },
+    user: (state) => {
+
+    }
   },
 });
 
-export const { toggleSidebar } = uiSlice.actions;
+export const { toggleSidebar, user } = uiSlice.actions;
 export default uiSlice.reducer;

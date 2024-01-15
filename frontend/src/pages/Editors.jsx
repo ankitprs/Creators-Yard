@@ -19,7 +19,7 @@ const EditorList = () => {
   };
 
   useEffect(() => {
-    apiService.getEditorsList(channel_id, "ankitprasad.119@gmail.com").then((edits) => {
+    apiService.getEditorsList(channel_id).then((edits) => {
       if (!edits || !edits[0]) return
       setEditors(edits[0].editors_email_id)
     })

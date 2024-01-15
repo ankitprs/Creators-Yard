@@ -1,52 +1,53 @@
-import nodemailer from "nodemailer";
-
+import axios from "axios";
 
 class MailService {
 
-  editorAddedMail = async ({ channel_name, owner_email_id, editor_email_id }) => {
-    const button_link = "https://channelnest.com"
-    const subject = `Welcome to ${channel_name}!`
+  editorAddedMail = async ({editor_email_id, owner_email_id }) => {
+    const button_link = "https://creatorsyard.com/dashboard"
+    const subject = `Welcome to Creator Yard!`
     const email_body = `Hi,
-    Exciting news! You've been added to ${channel_name} by ${owner_email_id}!
+    Exciting news! You've been added  by ${owner_email_id}!
     🎥 To upload your videos, simply click on this link: ${button_link}
     Welcome aboard!
     Best regards,`
-    return this.sendMail({ to: editor_email_id, subject: subject, body: email_body })
+    return this.sendMailUsingBrevo({ to_email_id: editor_email_id, subject: subject, mailContent: email_body })
   }
 
-  sendMail = async ({ to, subject, body }) => {
+  sendMailUsingBrevo = async ({mailContent, to_email_id, subject}) => {
+    const BREVO_URL = "https://api.brevo.com/v3/smtp/email"
+    const apiKey = process.env.BREVO_API_KEY;
 
-    let transporter = nodemailer.createTransport({
-      service: 'gmail',
-      auth: {
-        type: 'OAuth2',
-        user: process.env.MAIL_USERNAME,
-        pass: process.env.MAIL_PASSWORD,
-        clientId: process.env.OAUTH_CLIENTID,
-        clientSecret: process.env.OAUTH_CLIENT_SECRET,
-        refreshToken: process.env.OAUTH_REFRESH_TOKEN
-      }
-    });
-
-    let mailOptions = {
-      from: `tomerpacific@gmail.com`,
-      to: `tomerpacific@gmail.com`,
-      subject: 'Nodemailer Project',
-      text: 'Hi from your nodemailer project'
+    const emailData = {
+      sender: {
+        name: "Ankit",
+        email: "ankitpr2001@gmail.com"
+      },
+      to: [
+        {
+          email: to_email_id
+        }
+      ],
+      htmlContent: mailContent,
+      // textContent: mailContent,
+      subject: subject
     };
 
     try {
-
-      // send mail with defined transport object
-      const info = await transporter.sendMail(mailOptions);
-      console.log("Email sent successfully");
-      console.log("Message sent: %s", info.messageId);
-      return true;
-    } catch (err) {
-      console.log("Error " + err);
-      return false;
+      const response = await axios.post(BREVO_URL, emailData, {
+        headers: {
+          'Accept': 'application/json',
+          'api-key': apiKey,
+          'Content-Type': 'application/json'
+        }
+      })
+      console.log(response.data);
+      return response.data
+    }catch (e) {
+      console.error(e);
+      return null
     }
   }
 }
+
 const mailService = new MailService
 export default mailService

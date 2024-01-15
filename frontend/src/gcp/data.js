@@ -8,45 +8,36 @@ const UserEmail_Id = "ankitprasad.119@gmail.com"
 
 class APIService {
 
-  authoriztedCall = async (REQUEST_TYPE, endpoint, requestBody, params) => {
+  authenticatedApiCall = async (REQUEST_TYPE, endpoint, requestBody={}, params={}) => {
     try {
+      console.log(`token : ${await auth.currentUser.uid}`)
       const token = await auth.currentUser.getIdToken
-      const url = process.env.REACT + endpoint
       if (REQUEST_TYPE == 'POST') {
-        const res = await axios.post(url, requestBody, {
+        return await axios.post(endpoint, requestBody, {
           headers: { authorization: `Bearer ${token}` },
           params: params
         })
-
-        return res;
       } else {
-        const res = await axios.get(url, {
-          headers: { authorization: `Bearer ${token}` },
-          params: params
-        }
+        return await axios.get(endpoint, {
+            headers: { authorization: `Bearer ${token}` },
+            params: params
+          }
         )
-
-        return res;
       }
     } catch (error) {
       console.log(error);
       return null
     }
-
-
   }
 
   // GET Requests
   // return type formate - {id, name, iconUrl}
   getChannels = async (user_email_id) => {
+
     const endpoint = `${HOST_URL}/channel/list_channels`
-    const params_parameter = {
-      params: {
-        email_id: user_email_id
-      }
-    }
+    console.log(`called getChannels`)
     try {
-      const response = await axios.get(endpoint, params_parameter)
+      const response = await this.authenticatedApiCall('GET', endpoint)
       return response.data
     } catch (err) {
       console.log(err);
@@ -54,16 +45,15 @@ class APIService {
     }
   }
 
-  getEditorsList = async (channel_id, user_email_id) => {
+  getEditorsList = async (channel_id) => {
+    if(!channel_id) return [];
     const endpoint = `${HOST_URL}/channel/list_editors`
     const params_parameter = {
-      params: {
-        email_id: user_email_id,
         channel_id: channel_id
-      }
     }
+
     try {
-      const response = await axios.get(endpoint, params_parameter)
+      const response = await this.authenticatedApiCall('GET', endpoint,{}, params_parameter)
       console.log(response.data);
       return response.data
     } catch (err) {
@@ -72,17 +62,14 @@ class APIService {
     }
   }
 
-  getVideosForChannel = async (channel_id, user_email_id) => {
-
+  getVideosForChannel = async (channel_id) => {
+    if(!channel_id) return [];
     const endpoint = `${HOST_URL}/video/channel_id/${channel_id}`
     const params_parameter = {
-      params: {
-        email_id: user_email_id,
         channel_id: channel_id
-      }
     }
     try {
-      const response = await axios.get(endpoint, params_parameter)
+      const response = await this.authenticatedApiCall('GET', endpoint,{}, params_parameter)
       console.log(`video: -> ${response.data}`);
       return response.data
     } catch (err) {

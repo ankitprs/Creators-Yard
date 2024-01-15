@@ -19,7 +19,7 @@ const Dashboard = () => {
   };
 
   useEffect(() => {
-    apiService.getVideosForChannel(channel_id, "ankitprasad.119@gmail.com").then((vids) => {
+    apiService.getVideosForChannel(channel_id ).then((vids) => {
       console.log(`videos : - ${JSON.stringify(vids)}`);
       if (vids) setVideos(vids)
     })

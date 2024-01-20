@@ -4,9 +4,10 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom';
 import authService from '../../gcp/auth'
 import LogoIcon from "../../assets/creactors_yard.png"
+import { logout } from '../../store/authSlice';
 
 const Navbar = () => {
-  const user = useSelector((state) => state.userData);
+  const user = useSelector((state) => state.auth.userData);
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
   const dispatch = useDispatch()
@@ -18,12 +19,9 @@ const Navbar = () => {
       setIsOpen(false);
     }
   };
-  async function fetchUser() {
-    await authService.getCurrentUser();
-  }
+
 
   useEffect(() => {
-    fetchUser()
     document.addEventListener('mousedown', handleClickOutside);
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
@@ -35,7 +33,7 @@ const Navbar = () => {
   }
   function onClickLogout() {
     try {
-      authService.logout()
+      dispatch(logout())
     } catch (error) {
       console.log('error signing out: ', error);
     }
@@ -70,7 +68,7 @@ const Navbar = () => {
             </svg>
           </button>
 
-          <h1 className="text-2xl font-bold" onClick={() => navigator('/dashboard')}>Channel Nest</h1>
+          <h1 className="text-2xl font-bold" onClick={() => navigator('/dashboard')}>Creator Yard</h1>
         </div>
 
 
@@ -80,7 +78,7 @@ const Navbar = () => {
             <button
               className="w-8 h-8 bg-gray-700 rounded-full flex items-center justify-center"
             >
-              <img src={user?.picture} alt="Profile" className="w-8 h-8 rounded-full" />
+              <img src={user?.icon_url} alt="Profile" className="w-8 h-8 rounded-full" />
 
             </button>
           </div>

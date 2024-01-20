@@ -1,4 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
+import authService from "../gcp/auth";
+
 
 const initialState = {
   status: false,
@@ -14,6 +16,7 @@ const authSlice = createSlice({
       state.userData = action.payload.userData
     },
     logout: (state) => {
+      authService.logout()
       state.status = false
       state.userData = null
     }

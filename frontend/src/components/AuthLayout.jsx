@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux/es/hooks/useSelector'
 import { useNavigate } from 'react-router-dom'
 
 function Protected({
-  children, authentication = true
+  children, authentication = false
 }) {
   const navigate = useNavigate()
   const [loader, setLoader] = useState(true)
@@ -13,7 +13,7 @@ function Protected({
     if (authentication && authStatus !== authentication) {
       // navigate("/login")
     } else if (!authentication && authStatus !== authentication) {
-      navigate("/")
+      // navigate("/dashboard")
     }
     setLoader(false)
   }, [authStatus, navigate, authentication])

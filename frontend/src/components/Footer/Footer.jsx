@@ -8,7 +8,7 @@ function Footer() {
       <div className="container mx-auto flex items-center justify-between">
         <div className="flex items-center space-x-4">
           {/* Add your logo or brand icon here */}
-          <span className="text-xl font-bold">Channel Nest</span>
+          <span className="text-xl font-bold">Creator Yard</span>
           {/* Add additional links or icons as needed */}
           <a href="#" className="hover:text-gray-400">Home</a>
           <a href="#" className="hover:text-gray-400">About</a>

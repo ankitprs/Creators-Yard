@@ -14,6 +14,7 @@ const EditorList = () => {
 
   const handleOpen = (bool_val, email_id) => {
     setOpen(bool_val)
+    if (!email_id) return
     apiService.addEditors(channel_id, email_id)
     handleAddEditor(email_id)
   };

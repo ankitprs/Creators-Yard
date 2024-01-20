@@ -12,7 +12,7 @@ import './conf/conf'
 import './index.css';
 import App from './App';
 import { AuthLayout } from './components';
-import { LandingPage, Login, UploadPage, VideoPage, Dashboard, EditorList, Callback, TermsAndConditions, PrivacyPolicy, RefundPolicy, CustomerSupport } from './pages';
+import { LandingPage, Login, UploadPage, VideoPage, Dashboard, EditorList, Callback, TermsAndConditions, PrivacyPolicy, RefundPolicy, CustomerSupport, FirstPage } from './pages';
 
 
 
@@ -45,7 +45,7 @@ const router = createBrowserRouter([
         element: (
           <AuthLayout authentication>
             {" "}
-            <Dashboard />
+            <FirstPage />
           </AuthLayout>
         )
       },
@@ -69,7 +69,7 @@ const router = createBrowserRouter([
         )
       },
       {
-        path: '/dashboard/video/:video_id',
+        path: '/dashboard/channel/:channel_id/video/:video_id',
         element: (
           <AuthLayout authentication>
             {" "}

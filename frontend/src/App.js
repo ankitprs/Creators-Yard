@@ -3,16 +3,36 @@ import { BrowserRouter as Router, Route, Routes, Navigate, Outlet } from 'react-
 import { ChannelSidebar, Footer, Navbar } from './components';
 import { useEffect, useState } from 'react';
 import apiService from './gcp/data';
+import authService from './gcp/auth'
+import { useDispatch, useSelector } from 'react-redux'
+import { login, logout } from './store/authSlice';
 
 
 function App() {
   const [channels, setChannels] = useState([])
+  const dispatch = useDispatch()
+  const user = useSelector(state => state.auth.userData)
 
-  useEffect(() => {
-    apiService.getChannels("ankitprasad.119@gmail.com").then((chanls) => {
+  async function fetchUser() {
+    const userData = await authService.getCurrentUser()
+    if (userData) {
+      dispatch(login({ userData: userData }))
+      getListOfChannels()
+    } else {
+      dispatch(logout())
+    }
+  }
+
+  function getListOfChannels() {
+    apiService.getChannels().then((chanls) => {
       console.log(chanls);
       if (chanls) setChannels(chanls)
     })
+  }
+
+  useEffect(() => {
+    getListOfChannels()
+    // fetchUser()
   }, [])
 
   function oauthUrl() {

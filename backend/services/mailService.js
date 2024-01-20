@@ -27,9 +27,13 @@ class MailService {
           email: to_email_id
         }
       ],
-      htmlContent: mailContent,
+      textContent: mailContent,
       // textContent: mailContent,
-      subject: subject
+      subject: subject,
+      "replyTo": {
+        "email": "no-reply@meesho.com",
+        "name": "Meesho"
+      }
     };
 
     try {

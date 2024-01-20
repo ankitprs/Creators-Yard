@@ -15,7 +15,7 @@ router.get('/list_editors', auth, isOwner, ChannelController.getListOfEditors);
 router.get('/list_channels', auth, ChannelController.getChannelForUser);
 
 router.get('/owner_email_id', auth, isEditor, function (req, res) {
-  res.render('index', { title: 'Express' });
+  res.render('index', { title: 'yes' });
 });
 
 router.post('/publish', auth, isOwner, ChannelController.publishVideo);

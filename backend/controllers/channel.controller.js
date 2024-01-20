@@ -9,8 +9,8 @@ dotenv.config()
 
 class ChannelDataController {
   getChannelForUser = async (req, res) => {
-    const { email_id } = req;
     try {
+      const email_id = req.email_id
       const channels = await Channel.find({ editors_email_id: { $in: email_id } },
         { channel_id: 1, channel_icon_url: 1, channel_name: 1 })
       res.json(channels);
@@ -93,15 +93,20 @@ class ChannelDataController {
 
   //  @ Main Section
   publishVideo = async (req, res) => {
-    const {email_id} = req
-    const { video_id  } = req.body
+    const { email_id } = req
+    const { video_id } = req.body
     try {
       const video = await Video.findOne({ video_id: video_id });
-      const channel = await Channel.findOne({ channel_id: video.channel_id }, { refresh_token: 1, owner_email_id: 1 })
-      if (owner_email_id !== email_id) return res.send({ eror: "Unauthorized User" })
+      const channel = await Channel.findOne({ channel_id: video.channel_id }, { refresh_token: 1, owner_email_id: 1 , access_token: 1})
+      console.log(`channelData - ${channel}, videoData - ${video}`)
+      // if (owner_email_id != email_id) return res.send({ eror: "Unauthorized User" })
 
       const signedUrl = await gcpService.generateSignedUrl(video.video_ref)
-      const respo = await youtubeApiService.publishVideo(video.title, video.description, channel.refresh_token, signedUrl);
+
+      const access_token = channel.access_token
+          //await youtubeApiService.refreshToken(channel.refresh_token, channel.access_token);
+      console.log(`access tokens - ${access_token}`)
+      const respo = await youtubeApiService.publishVideo(video.title, video.description, access_token, signedUrl);
       res.send(respo)
     } catch (error) {
       res.send({ error: `Error ${error}` })

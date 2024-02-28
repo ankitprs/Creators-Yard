@@ -1,5 +1,6 @@
 import { auth, provider } from "../conf/conf";
-import { signInWithPopup, signOut } from "firebase/auth";
+import { signInWithPopup, signOut, onAuthStateChanged } from "firebase/auth";
+import apiService from "./data"
 
 
 export class AuthService {
@@ -19,8 +20,15 @@ export class AuthService {
   // return formate - {email_id, icon_url} or null
   async getCurrentUser() {
     try {
-      const currUser = await auth
-      console.log(currUser);
+      const currUser = await new Promise((resolve, reject) => {
+        onAuthStateChanged(auth, (user) => {
+          if (user) {
+            resolve(user)
+          } else {
+            reject(user)
+          }
+        });
+      })
       if (!currUser) return null;
       const userData = {
         uid: currUser.uid,
@@ -29,8 +37,8 @@ export class AuthService {
         icon_url: currUser.photoURL,
         token: currUser.stsTokenManager.accessToken,
       };
+      apiService.putAuthToken(userData.token);
       return userData;
-      // onAuthStateChanged(auth, onResponse);
     } catch (error) {
       console.log("Firebase Service :: getCurrentUser:: error", error);
       return null;

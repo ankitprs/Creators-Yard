@@ -1,19 +1,21 @@
 import React, { useEffect, useState } from 'react'
-import { useSelector } from 'react-redux/es/hooks/useSelector'
 import { useNavigate } from 'react-router-dom'
+import { useRecoilValue } from 'recoil'
+import { userAtom } from '../store/atoms/authAtom'
 
 function Protected({
   children, authentication = false
 }) {
   const navigate = useNavigate()
   const [loader, setLoader] = useState(true)
-  const authStatus = useSelector(state => state.auth.status)
+  const user = useRecoilValue(userAtom)
+  const authStatus = user != null
 
   useEffect(() => {
     if (authentication && authStatus !== authentication) {
-      // navigate("/login")
+      navigate("/login")
     } else if (!authentication && authStatus !== authentication) {
-      // navigate("/dashboard")
+      navigate("/dashboard")
     }
     setLoader(false)
   }, [authStatus, navigate, authentication])

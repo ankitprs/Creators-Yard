@@ -43,7 +43,7 @@ const VideoPage = () => {
   return (
     <div className="bg-gray-900 text-white min-h-screen p-6">
       {/* Video View */}
-      <div className=" h-1/2 w-1/2 rounded-lg overflow-hidden mb-6">
+      <div className=" h-full w-full p-8 rounded-lg overflow-hidden mb-6">
         {/* <ReactPlayer
           url={streamableUrl}
         /> */}

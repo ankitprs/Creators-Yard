@@ -1,16 +1,17 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { toggleSidebar } from '../../store/uiSlice';
-import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom';
-import authService from '../../gcp/auth'
 import LogoIcon from "../../assets/creactors_yard.png"
-import { logout } from '../../store/authSlice';
+import { uiSidebarAtom } from '../../store/atoms/uiAtom';
+import { useSetRecoilState, useRecoilState } from 'recoil';
+import { userAtom } from '../../store/atoms/authAtom';
+import authService from '../../gcp/auth';
+
 
 const Navbar = () => {
-  const user = useSelector((state) => state.auth.userData);
+  const [user, setUser] = useRecoilState(userAtom);
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
-  const dispatch = useDispatch()
+  const uiSidebarState = useSetRecoilState(uiSidebarAtom)
   const navigator = useNavigate()
 
   // Close dropdown when clicking outside
@@ -20,6 +21,7 @@ const Navbar = () => {
     }
   };
 
+  console.log(`User Atom Value -> ${JSON.stringify(user)}`);
 
   useEffect(() => {
     document.addEventListener('mousedown', handleClickOutside);
@@ -33,7 +35,8 @@ const Navbar = () => {
   }
   function onClickLogout() {
     try {
-      dispatch(logout())
+      authService.logout()
+      setUser(null);
     } catch (error) {
       console.log('error signing out: ', error);
     }
@@ -50,7 +53,7 @@ const Navbar = () => {
             aria-controls="default-sidebar"
             type="button"
             className="inline-flex mx-4 items-center p-2  ms-3  rounded-lg hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
-            onClick={() => dispatch(toggleSidebar())}
+            onClick={() => { uiSidebarState(e => !e) }}
           >
             <span className="sr-only">Open sidebar</span>
             <svg

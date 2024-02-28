@@ -4,22 +4,19 @@ import { ChannelSidebar, Footer, Navbar } from './components';
 import { useEffect, useState } from 'react';
 import apiService from './gcp/data';
 import authService from './gcp/auth'
-import { useDispatch, useSelector } from 'react-redux'
-import { login, logout } from './store/authSlice';
 
 
 function App() {
   const [channels, setChannels] = useState([])
-  const dispatch = useDispatch()
-  const user = useSelector(state => state.auth.userData)
 
   async function fetchUser() {
     const userData = await authService.getCurrentUser()
     if (userData) {
-      dispatch(login({ userData: userData }))
+      // dispatch(login({ userData: userData }))
+      apiService.authToken = userData.token;
       getListOfChannels()
     } else {
-      dispatch(logout())
+      // dispatch(logout())
     }
   }
 
@@ -31,8 +28,8 @@ function App() {
   }
 
   useEffect(() => {
-    getListOfChannels()
-    // fetchUser()
+    // getListOfChannels()
+    fetchUser()
   }, [])
 
   function oauthUrl() {
@@ -54,7 +51,6 @@ function App() {
       </div>
       <Footer />
     </div>
-
   );
 }
 

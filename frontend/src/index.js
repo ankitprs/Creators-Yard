@@ -3,8 +3,7 @@ import ReactDOM from 'react-dom/client';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import reportWebVitals from './reportWebVitals';
 
-import store from './store/store';
-import { Provider } from 'react-redux'
+import { RecoilRoot } from 'recoil'
 
 // backend and firebase setup
 import './conf/conf'
@@ -111,9 +110,9 @@ const router = createBrowserRouter([
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <Provider store={store}>
+    <RecoilRoot>
       <RouterProvider router={router} />
-    </Provider>
+    </RecoilRoot>
   </React.StrictMode>
 );
 

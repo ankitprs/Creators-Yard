@@ -8,9 +8,12 @@ const UserEmail_Id = "ankitprasad.119@gmail.com"
 
 class APIService {
 
+  authToken = "";
+
   authenticatedApiCall = async (REQUEST_TYPE, endpoint, requestBody = {}, params = {}) => {
     try {
-      const token = "a34ign"
+      const token = this.authToken;
+      console.log(`TOKEN -> ${token}`)
       //await auth.currentUser.getIdToken()
       if (REQUEST_TYPE == 'POST') {
         return await axios.post(endpoint, requestBody, {
@@ -91,8 +94,8 @@ class APIService {
     }
   }
 
-  getStreamableUrl = () => {
-
+  putAuthToken = (token) =>{
+    this.authToken = token;
   }
 
   // CREATE CHANNEL 
@@ -169,6 +172,7 @@ class APIService {
 
     }
   }
+  
   // === PUBLISH VIDEO  === 
   publishVideoToYT = async (video_id, channel_id) => {
     const requestData = { video_id: video_id, channel_id: channel_id };

@@ -35,7 +35,7 @@ class UserController {
     try {
       const user = await User.findOne({ email_id: email_id }, { is_premium: 1, plan_valid_till: 1 });
 
-      if (user.is_premium == true && plan_valid_till > Date.now())
+      if (user.is_premium == true && user.plan_valid_till > Date.now())
         return true;
       else
         return false;

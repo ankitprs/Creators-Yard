@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import ChannelCard from './ChannelCard';
-import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-
+import { useRecoilValue } from 'recoil';
+import { uiSidebarAtom } from '../store/atoms/uiAtom';
 
 const ChannelSidebar = ({ channels, onAuthClick }) => {
-  const isSidebarOpen = useSelector((state) => state.sidebar.isSidebarOpen);
+  const isSidebarOpen = useRecoilValue(uiSidebarAtom);
   const navigator = useNavigate()
 
   return (

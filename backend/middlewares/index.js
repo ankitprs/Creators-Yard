@@ -14,8 +14,6 @@ const getAuthToken = async (req) => {
 };
 
 const auth = async (req, res, next) => {
-  req.email_id = "ankitprasad.119@gmail.com"
-  return next()
   try {
     const authToken = await getAuthToken(req);
     const userInfo = await admin.auth()

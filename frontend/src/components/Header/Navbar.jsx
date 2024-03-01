@@ -1,15 +1,17 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { toggleSidebar } from '../../store/uiSlice';
-import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom';
-import authService from '../../gcp/auth'
 import LogoIcon from "../../assets/creactors_yard.png"
+import { uiSidebarAtom } from '../../store/atoms/uiAtom';
+import { useSetRecoilState, useRecoilState } from 'recoil';
+import { userAtom } from '../../store/atoms/authAtom';
+import authService from '../../gcp/auth';
+
 
 const Navbar = () => {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useRecoilState(userAtom);
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
-  const dispatch = useDispatch()
+  const uiSidebarState = useSetRecoilState(uiSidebarAtom)
   const navigator = useNavigate()
 
   // Close dropdown when clicking outside
@@ -18,14 +20,10 @@ const Navbar = () => {
       setIsOpen(false);
     }
   };
-  async function fetchUser() {
-    const currUser = await authService.getCurrentUser();
-    console.log(currUser);
-    setUser({ name: currUser?.name, picture: currUser?.icon_url });
-  }
-  useEffect(() => {
 
-    fetchUser()
+  console.log(`User Atom Value -> ${JSON.stringify(user)}`);
+
+  useEffect(() => {
     document.addEventListener('mousedown', handleClickOutside);
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
@@ -38,6 +36,7 @@ const Navbar = () => {
   function onClickLogout() {
     try {
       authService.logout()
+      setUser(null);
     } catch (error) {
       console.log('error signing out: ', error);
     }
@@ -54,7 +53,7 @@ const Navbar = () => {
             aria-controls="default-sidebar"
             type="button"
             className="inline-flex mx-4 items-center p-2  ms-3  rounded-lg hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
-            onClick={() => dispatch(toggleSidebar())}
+            onClick={() => { uiSidebarState(e => !e) }}
           >
             <span className="sr-only">Open sidebar</span>
             <svg
@@ -72,7 +71,7 @@ const Navbar = () => {
             </svg>
           </button>
 
-          <h1 className="text-2xl font-bold" onClick={() => navigator('/dashboard')}>Channel Nest</h1>
+          <h1 className="text-2xl font-bold" onClick={() => navigator('/dashboard')}>Creator Yard</h1>
         </div>
 
 
@@ -82,7 +81,7 @@ const Navbar = () => {
             <button
               className="w-8 h-8 bg-gray-700 rounded-full flex items-center justify-center"
             >
-              <img src={user?.picture} alt="Profile" className="w-8 h-8 rounded-full" />
+              <img src={user?.icon_url} alt="Profile" className="w-8 h-8 rounded-full" />
 
             </button>
           </div>

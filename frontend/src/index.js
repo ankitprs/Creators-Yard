@@ -3,8 +3,7 @@ import ReactDOM from 'react-dom/client';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import reportWebVitals from './reportWebVitals';
 
-import store from './store/store';
-import { Provider } from 'react-redux'
+import { RecoilRoot } from 'recoil'
 
 // backend and firebase setup
 import './conf/conf'
@@ -12,7 +11,7 @@ import './conf/conf'
 import './index.css';
 import App from './App';
 import { AuthLayout } from './components';
-import { LandingPage, Login, UploadPage, VideoPage, Dashboard, EditorList, Callback, TermsAndConditions, PrivacyPolicy, RefundPolicy, CustomerSupport } from './pages';
+import { LandingPage, Login, UploadPage, VideoPage, Dashboard, EditorList, Callback, TermsAndConditions, PrivacyPolicy, RefundPolicy, CustomerSupport, FirstPage } from './pages';
 
 
 
@@ -45,7 +44,7 @@ const router = createBrowserRouter([
         element: (
           <AuthLayout authentication>
             {" "}
-            <Dashboard />
+            <FirstPage />
           </AuthLayout>
         )
       },
@@ -69,7 +68,7 @@ const router = createBrowserRouter([
         )
       },
       {
-        path: '/dashboard/video/:video_id',
+        path: '/dashboard/channel/:channel_id/video/:video_id',
         element: (
           <AuthLayout authentication>
             {" "}
@@ -111,9 +110,9 @@ const router = createBrowserRouter([
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <Provider store={store}>
+    <RecoilRoot>
       <RouterProvider router={router} />
-    </Provider>
+    </RecoilRoot>
   </React.StrictMode>
 );
 

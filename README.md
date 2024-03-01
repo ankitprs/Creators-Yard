@@ -5,7 +5,7 @@ Welcome to Creators Yard, a powerful platform designed exclusively for YouTube C
 ![img](./frontend/src/assets/creactors_yard.png)
 
 ## Live Link
-  Explore the live version of Creators Yard here. [Link](https://creatorsyard.vercel.app/)
+  Explore the live version of Creators Yard here. [Link](https://creatoryards.com)
 
 ## Features
  - Editor Collaboration: Creators can add editors to their channel on Creators Yard, allowing them to upload edited videos to the platform.

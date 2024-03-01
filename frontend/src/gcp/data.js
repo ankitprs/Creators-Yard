@@ -2,50 +2,43 @@ import axios from 'axios';
 import authService from './auth';
 import { auth } from '../conf/conf';
 const HOST_URL = "http://localhost:3002/api/v0"
-const icon_url1 = "https://yt3.googleusercontent.com/ytc/APkrFKYL_GdO9ss5jGkRtiuavwTl1PmYIF-UK6YlzISXiA=s176-c-k-c0x00ffffff-no-rj"
-const icon_url2 = "https://yt3.ggpht.com/MeY_fGNrjVLV0PVOBN7dRWzMBS0y41YGm55LOaJ02cXV82a7Np9pYxxhHFqdYdncEy1I2cYR=s176-c-k-c0x00ffffff-no-rj-mo"
 
 const UserEmail_Id = "ankitprasad.119@gmail.com"
 
 
 class APIService {
 
-  authoriztedCall = async (REQUEST_TYPE, requestBody, endpoint) => {
+  authToken = "";
+
+  authenticatedApiCall = async (REQUEST_TYPE, endpoint, requestBody = {}, params = {}) => {
     try {
-      const token = await auth.currentUser.getIdToken
-      const url = process.env.REACT + endpoint
+      const token = this.authToken;
+      console.log(`TOKEN -> ${token}`)
+      //await auth.currentUser.getIdToken()
       if (REQUEST_TYPE == 'POST') {
-        const res = await axios.post(url, requestBody, {
-          headers: { authorization: `Bearer ${token}` }
+        return await axios.post(endpoint, requestBody, {
+          headers: { authorization: `Bearer ${token}` },
+          params: params
         })
-
-        return res;
       } else {
-        //   const res = await axios.get(url, {
-        //     { authorization: `Bearer ${token}` }
-        //   })
-
-        // return res;
+        return await axios.get(endpoint, {
+          headers: { authorization: `Bearer ${token}` },
+          params: params
+        }
+        )
       }
     } catch (error) {
       console.log(error);
       return null
     }
-
-
   }
 
   // GET Requests
   // return type formate - {id, name, iconUrl}
-  getChannels = async (user_email_id) => {
+  getChannels = async () => {
     const endpoint = `${HOST_URL}/channel/list_channels`
-    const params_parameter = {
-      params: {
-        email_id: user_email_id
-      }
-    }
     try {
-      const response = await axios.get(endpoint, params_parameter)
+      const response = await this.authenticatedApiCall('GET', endpoint)
       return response.data
     } catch (err) {
       console.log(err);
@@ -53,17 +46,16 @@ class APIService {
     }
   }
 
-  getEditorsList = async (channel_id, user_email_id) => {
+  getEditorsList = async (channel_id) => {
+    if (!channel_id) return [];
     const endpoint = `${HOST_URL}/channel/list_editors`
     const params_parameter = {
-      params: {
-        email_id: user_email_id,
-        channel_id: channel_id
-      }
+      channel_id: channel_id
     }
+
     try {
-      const response = await axios.get(endpoint, params_parameter)
-      console.log(response.data);
+      const response = await this.authenticatedApiCall('GET', endpoint, {}, params_parameter)
+      console.log(response);
       return response.data
     } catch (err) {
       console.log(err);
@@ -71,18 +63,14 @@ class APIService {
     }
   }
 
-  getVideosForChannel = async (channel_id, user_email_id) => {
-
+  getVideosForChannel = async (channel_id) => {
+    if (!channel_id) return [];
     const endpoint = `${HOST_URL}/video/channel_id/${channel_id}`
     const params_parameter = {
-      params: {
-        email_id: user_email_id,
-        channel_id: channel_id
-      }
+      channel_id: channel_id
     }
     try {
-      const response = await axios.get(endpoint, params_parameter)
-      console.log(`video: -> ${response.data}`);
+      const response = await this.authenticatedApiCall('GET', endpoint, {}, params_parameter)
       return response.data
     } catch (err) {
       console.log(err);
@@ -98,8 +86,7 @@ class APIService {
       }
     }
     try {
-      const response = await axios.get(endpoint, params_parameter)
-      console.log(`video: -> ${response.data}`);
+      const response = await this.authenticatedApiCall('GET', endpoint, {}, params_parameter)
       return response.data
     } catch (err) {
       console.log(err);
@@ -107,14 +94,15 @@ class APIService {
     }
   }
 
-  getStreamableUrl = () => {
-
+  putAuthToken = (token) =>{
+    this.authToken = token;
   }
 
   // CREATE CHANNEL 
   getOauth2Url = async () => {
     try {
-      const response = await axios.post(HOST_URL + "/channel/oauth2_url")
+      const endpoint = HOST_URL + "/channel/oauth2_url"
+      const response = await this.authenticatedApiCall('POST', endpoint)
       return response.data.authorizationUrl;
     } catch (err) {
       console.error(err);
@@ -127,7 +115,8 @@ class APIService {
       authorization_code: authorization_code,
       email_id: UserEmail_Id,
     }
-    axios.post(HOST_URL + '/channel/create', requestData)
+    const apiUrl = HOST_URL + '/channel/create'
+    this.authenticatedApiCall('POST', apiUrl, requestData)
       .then(response => {
         console.log('Response:', response.data);
       }).catch(error => {
@@ -142,11 +131,12 @@ class APIService {
       editor_email_id: editor_email_id
     }
     const apiUrl = HOST_URL + `/channel/add_editors`
-    axios.post(apiUrl, requestData).then(res => {
-      console.log('Response:', res.data);
-    }).catch(error => {
-      console.error('Error:', error);
-    });
+    this.authenticatedApiCall('POST', apiUrl, requestData)
+      .then(res => {
+        console.log('Response:', res.data);
+      }).catch(error => {
+        console.error('Error:', error);
+      });
   }
 
   removeEditors = async (channel_id, editor_email_id) => {
@@ -155,18 +145,19 @@ class APIService {
       editor_email_id: editor_email_id
     }
     const apiUrl = HOST_URL + `/channel/remove_editors`
-    axios.post(apiUrl, requestData).then(res => {
-      console.log('Response:', res.data);
-    }).catch(error => {
-      console.error('Error:', error);
-    });
+    this.authenticatedApiCall('POST', apiUrl, requestData)
+      .then(res => {
+        console.log('Response:', res.data);
+      }).catch(error => {
+        console.error('Error:', error);
+      });
   }
 
   createUploadVideo = async (channel_id, video_id, title, description, email_id) => {
-    const requestBody = { channel_id: channel_id, video_id: video_id, title: title, description: description, email_id: email_id };
+    const requestData = { channel_id: channel_id, video_id: video_id, title: title, description: description, email_id: email_id };
     const apiUrl = HOST_URL + `/video/upload`
 
-    axios.post(apiUrl, requestBody)
+    this.authenticatedApiCall('POST', apiUrl, requestData)
       .then(response => {
         console.log('Response:', response.data);
       }).catch(error => {
@@ -181,17 +172,18 @@ class APIService {
 
     }
   }
+  
   // === PUBLISH VIDEO  === 
-  publishVideoToYT = async (video_id, user_email_id) => {
-    const requestBody = { video_id: video_id, email_id: user_email_id };
+  publishVideoToYT = async (video_id, channel_id) => {
+    const requestData = { video_id: video_id, channel_id: channel_id };
 
     const apiUrl = HOST_URL + `/channel/publish`
-    axios.post(apiUrl, requestBody).then(response => {
-      console.log('Response:', response.data);
-    }).catch(error => {
-      console.error('Error:', error);
-    });
-
+    this.authenticatedApiCall('POST', apiUrl, requestData)
+      .then(response => {
+        console.log('Response:', response.data);
+      }).catch(error => {
+        console.error('Error:', error);
+      });
   }
 }
 

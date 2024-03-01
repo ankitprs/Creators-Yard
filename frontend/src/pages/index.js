@@ -9,6 +9,7 @@ import TermsAndConditions from './TermsAndConditions'
 import RefundPolicy from './RefundPolicy'
 import PrivacyPolicy from "./PrivacyPolicy";
 import CustomerSupport from './CustomerSupport'
+import FirstPage from './FirstPage'
 
 export {
   Callback,
@@ -21,5 +22,6 @@ export {
   TermsAndConditions,
   RefundPolicy,
   PrivacyPolicy,
-  CustomerSupport
+  CustomerSupport,
+  FirstPage
 }

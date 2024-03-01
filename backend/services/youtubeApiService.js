@@ -53,14 +53,15 @@ class YoutubeApiService {
 
 
 
-
   // <============  Publish to CHANNEL ============>
   refreshToken = async (refresh_token) => {
-    this.oauth2Client.setCredentials({ refresh_token })
     try {
+      this.oauth2Client.setCredentials({ refresh_token: refresh_token })
+
       const response = await this.oauth2Client.refreshToken()
+      return {}
+      console.log("Access token refreshed:", response);
       const { access_token, expires_in } = response.credentials;
-      console.log("Access token refreshed:", access_token);
       console.log("Expires in:", expires_in, "seconds");
       return access_token;
     } catch (error) {
@@ -69,9 +70,8 @@ class YoutubeApiService {
     return null;
   }
 
-  publishVideo = async (title, description, refresh_token, signedUrl) => {
+  publishVideo = async (title, description, access_token, signedUrl) => {
     try {
-      const access_token = await refreshToken(refresh_token);
 
       const stream = got.stream(signedUrl);
 

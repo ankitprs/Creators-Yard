@@ -14,12 +14,13 @@ const EditorList = () => {
 
   const handleOpen = (bool_val, email_id) => {
     setOpen(bool_val)
+    if (!email_id) return
     apiService.addEditors(channel_id, email_id)
     handleAddEditor(email_id)
   };
 
   useEffect(() => {
-    apiService.getEditorsList(channel_id, "ankitprasad.119@gmail.com").then((edits) => {
+    apiService.getEditorsList(channel_id).then((edits) => {
       if (!edits || !edits[0]) return
       setEditors(edits[0].editors_email_id)
     })

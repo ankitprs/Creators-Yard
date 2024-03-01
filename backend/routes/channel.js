@@ -3,7 +3,7 @@ import ChannelController from '../controllers/channel.controller.js'
 import { auth, isEditor, isOwner, isPremium } from '../middlewares/index.js';
 
 
-var router = express.Router();
+const router = express.Router();
 
 router.post('/oauth2_url', auth, isPremium, ChannelController.getOauth2Url)
 router.post('/create', auth, isPremium, ChannelController.createChannel);

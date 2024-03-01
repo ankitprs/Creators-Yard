@@ -1,54 +1,53 @@
-import axios from "axios";
+import SibApiV3Sdk from 'sib-api-v3-sdk'
+import dotenv from 'dotenv'
+dotenv.config()
+
+const defaultClient = SibApiV3Sdk.ApiClient.instance;
+let apiKey = defaultClient.authentications['api-key'];
+apiKey.apiKey = process.env.BREVO_API_KEY
 
 class MailService {
 
-  editorAddedMail = async ({editor_email_id, owner_email_id }) => {
+  editorAddedMail = async (editor_email_id, owner_email_id) => {
     const button_link = "https://creatorsyard.com/dashboard"
     const subject = `Welcome to Creator Yard!`
-    const email_body = `Hi,
+    const email_body = `
     Exciting news! You've been added  by ${owner_email_id}!
     🎥 To upload your videos, simply click on this link: ${button_link}
     Welcome aboard!
     Best regards,`
-    return this.sendMailUsingBrevo({ to_email_id: editor_email_id, subject: subject, mailContent: email_body })
+    return this.sendMailUsingBrevo(email_body, editor_email_id, subject)
   }
 
-  sendMailUsingBrevo = async ({mailContent, to_email_id, subject}) => {
-    const BREVO_URL = "https://api.brevo.com/v3/smtp/email"
-    const apiKey = process.env.BREVO_API_KEY;
+  sendMailUsingBrevo = async (mailContent, to_email_id, subject) => {
 
-    const emailData = {
-      sender: {
-        name: "Ankit",
-        email: "ankitpr2001@gmail.com"
-      },
-      to: [
-        {
-          email: to_email_id
-        }
-      ],
-      textContent: mailContent,
-      // textContent: mailContent,
-      subject: subject,
-      "replyTo": {
-        "email": "no-reply@meesho.com",
-        "name": "Meesho"
+    var apiInstance = new SibApiV3Sdk.TransactionalEmailsApi();
+    const sender = {
+      email: "support@creatorsyard.com",
+      name: "support"
+    }
+
+    const receivers = [
+      {
+        email: to_email_id,
+        name: to_email_id
       }
-    };
+    ]
 
     try {
-      const response = await axios.post(BREVO_URL, emailData, {
-        headers: {
-          'Accept': 'application/json',
-          'api-key': apiKey,
-          'Content-Type': 'application/json'
-        }
-      })
-      console.log(response.data);
-      return response.data
-    }catch (e) {
-      console.error(e);
-      return null
+      var sendSmtpEmail = new SibApiV3Sdk.SendSmtpEmail(); // SendSmtpEmail | Values to send a transactional email
+
+      sendSmtpEmail = {
+        sender,
+        to: receivers,
+        subject: subject,
+        textContent: "testing content",
+        htmlContent: `<html><head></head><body><p>Hello,</p>${mailContent}</p></body></html>`
+      }
+      const sendEmail = await apiInstance.sendTransacEmail(sendSmtpEmail)
+      return sendEmail
+    } catch (error) {
+      return error;
     }
   }
 }

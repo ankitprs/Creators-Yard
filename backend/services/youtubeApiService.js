@@ -53,13 +53,13 @@ class YoutubeApiService {
 
 
 
-
   // <============  Publish to CHANNEL ============>
-  refreshToken = async (refresh_token, access_token) => {
+  refreshToken = async (refresh_token) => {
     try {
-      console.log( `values logging ie... refresh_token: ${refresh_token}, access_token : ${access_token}`)
       this.oauth2Client.setCredentials({ refresh_token: refresh_token })
+
       const response = await this.oauth2Client.refreshToken()
+      return {}
       console.log("Access token refreshed:", response);
       const { access_token, expires_in } = response.credentials;
       console.log("Expires in:", expires_in, "seconds");

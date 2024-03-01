@@ -45,7 +45,7 @@ const isPremium = async (req, res, next) => {
 }
 
 const isOwner = async (req, res, next) => {
-  const { channel_id } = req.body
+  const { channel_id } = req.query
   try {
     const isOwner = await userController.isOwnerOfChannel(req.email_id, channel_id)
 

@@ -22,7 +22,8 @@
     "jade": "~1.11.0",
     "mongoose": "^8.0.2",
     "morgan": "~1.9.1",
-    "razorpay": "^2.9.2"
+    "razorpay": "^2.9.2",
+    "sib-api-v3-sdk": "^8.5.0"
   },
   "devDependencies": {
     "@types/json-schema": "^7.0.15"

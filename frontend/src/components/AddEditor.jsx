@@ -10,6 +10,10 @@ const DarkModeFormDialog = ({ handleOpen }) => {
     handleOpen(false, email)
   };
 
+  const closeHandler = (e) => {
+    handleOpen(false, null);
+  }
+
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-80 z-50">
       <div className="bg-gray-800 text-white rounded-lg p-8">
@@ -32,6 +36,8 @@ const DarkModeFormDialog = ({ handleOpen }) => {
             Subscribe
           </button>
         </form>
+        <button className="w-full my-3 px-4 py-2 text-sm font-medium bg-red-500 text-white rounded-md hover:bg-red-600 focus:outline-none focus:ring focus:border-red-300"
+          onClick={closeHandler}>Cancel</button>
       </div>
     </div>
   );

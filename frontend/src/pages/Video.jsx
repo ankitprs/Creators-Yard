@@ -8,7 +8,7 @@ import "plyr-react/plyr.css"
 
 const VideoPage = () => {
   const [video, setVideo] = useState({})
-  const { video_id } = useParams()
+  const { video_id, channel_id } = useParams()
   const [streamableUrl, setStreamableUrl] = useState("");
 
   useEffect(() => {
@@ -24,9 +24,9 @@ const VideoPage = () => {
     });
   }, [])
 
-  const publishVideo = async (video_id) => {
+  const publishVideo = async () => {
     console.log('called');
-    await apiService.publishVideoToYT(video_id, "ankitprasad.119@gmail.com");
+    await apiService.publishVideoToYT(video_id, channel_id);
   }
 
   const videoSrc = {
@@ -43,7 +43,7 @@ const VideoPage = () => {
   return (
     <div className="bg-gray-900 text-white min-h-screen p-6">
       {/* Video View */}
-      <div className=" h-1/2 w-1/2 rounded-lg overflow-hidden mb-6">
+      <div className=" h-full w-full p-8 rounded-lg overflow-hidden mb-6">
         {/* <ReactPlayer
           url={streamableUrl}
         /> */}

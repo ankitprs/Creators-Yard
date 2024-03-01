@@ -39,5 +39,6 @@ class VideoController {
     return "presignedGETURL"
   }
 }
+
 const videoController = new VideoController;
 export default videoController;

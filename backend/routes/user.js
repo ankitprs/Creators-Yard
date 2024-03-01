@@ -1,17 +1,16 @@
 import express from 'express';
-// import UserController from '../controllers/user.controller.js'
+import UserController from '../controllers/user.controller.js'
 import { auth, isEditor, isOwner, isPremium } from '../middlewares/index.js';
 
 
 const router = express.Router();
 
-/* GET users listing. */
-router.get('/is_premium', isPremium, function (req, res) {
+
+router.get('/is_premium', auth, isPremium, function (req, res) {
   res.send({ isPremium: true });
 });
 
-router.get('/payments', function (req, res) {
-
-})
+router.post('/add_user', UserController.createUser)
+router.get('/get_user', auth, UserController.getUser)
 
 export default router;

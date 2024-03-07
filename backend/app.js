@@ -46,6 +46,6 @@ app.use(function (err, req, res, next) {
   res.render('error');
 });
 
-app.listen(3002, (req, res) => {
-  console.log("Server is running in port 3002");
+app.listen(8080, (req, res) => {
+  console.log("Server is running in port 8080");
 });

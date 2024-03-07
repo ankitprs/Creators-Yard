@@ -8,24 +8,24 @@ import dotenv from 'dotenv'
 dotenv.config()
 
 import mongoose from './config/config.js';
-// import userRouter from './routes/user.js'
-// import videoRouter from './routes/video.js'
-// import channelRouter from './routes/channel.js'
-// import paymentRouter from './routes/payment.js'
+import userRouter from './routes/user.js'
+import videoRouter from './routes/video.js'
+import channelRouter from './routes/channel.js'
+import paymentRouter from './routes/payment.js'
 
 const app = express();
 
-// app.use(cors());
-// app.use(logger('dev'));
-// app.use(express.json());
-// app.use(express.urlencoded({ extended: false }));
-// app.use(cookieParser());
-// // app.use(express.static(path.join(__dirname, 'public')));
+app.use(cors());
+app.use(logger('dev'));
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+app.use(cookieParser());
+// app.use(express.static(path.join(__dirname, 'public')));
 
-// app.use('/api/v0/user', userRouter);
-// app.use('/api/v0/video', videoRouter);
-// app.use('/api/v0/channel', channelRouter);
-// app.use('/api/v0/payment', paymentRouter)
+app.use('/api/v0/user', userRouter);
+app.use('/api/v0/video', videoRouter);
+app.use('/api/v0/channel', channelRouter);
+app.use('/api/v0/payment', paymentRouter)
 
 app.get('/', function (req, res) {
   res.send('Creators Yard is running !!!')

@@ -50,7 +50,7 @@ on:
 
 env:
   PROJECT_ID: ${{ secrets.GCP_PROJECT }} # TODO: update Google Cloud project id
-  GAR_LOCATION: us-central1 # TODO: update Artifact Registry location
+  GAR_LOCATION: ${{ secrets.REGION }} # TODO: update Artifact Registry location
   SERVICE: ${{ secrets.CLOUD_RUN_SEVICE_NAME }} # TODO: update Cloud Run service name
   REGION: ${{ secrets.REGION }} # TODO: update Cloud Run service region
   REPOSITORY: ${{ secrets.REPOSITORY_NAME }} 

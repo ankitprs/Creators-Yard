@@ -7,7 +7,7 @@ import dotenv from 'dotenv'
 
 dotenv.config()
 
-// import mongoose from './config/config.js';
+import mongoose from './config/config.js';
 // import userRouter from './routes/user.js'
 // import videoRouter from './routes/video.js'
 // import channelRouter from './routes/channel.js'

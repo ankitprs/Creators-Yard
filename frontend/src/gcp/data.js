@@ -1,7 +1,8 @@
 import axios from 'axios';
 import authService from './auth';
 import { auth } from '../conf/conf';
-const HOST_URL = "http://localhost:3002/api/v0"
+
+const HOST_URL = process.env.REACT_APP_BACKEND_URL
 
 const UserEmail_Id = "ankitprasad.119@gmail.com"
 
@@ -94,7 +95,7 @@ class APIService {
     }
   }
 
-  putAuthToken = (token) =>{
+  putAuthToken = (token) => {
     this.authToken = token;
   }
 
@@ -172,7 +173,7 @@ class APIService {
 
     }
   }
-  
+
   // === PUBLISH VIDEO  === 
   publishVideoToYT = async (video_id, channel_id) => {
     const requestData = { video_id: video_id, channel_id: channel_id };

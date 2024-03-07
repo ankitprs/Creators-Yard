@@ -5,11 +5,11 @@ RUN npm install
 
 FROM base AS development
 COPY . .
-EXPOSE 3002
+EXPOSE 8080
 CMD [ "npm", "run", "dev" ]
 
 
 FROM base AS production
 COPY . .
-EXPOSE 3002
+EXPOSE 8080
 CMD ["npm", "start"]

@@ -31,7 +31,7 @@ const ChannelSidebar = ({ channels, onAuthClick }) => {
           </button>
         </div>
       </a>
-      {channels.map((channel) => (
+      {channels.map(channel => (
         <div onClick={() => navigator(`/dashboard/channel/${channel.channel_id}`)} key={channel.channel_id} className="mb-2" t>
           <ChannelCard channel={channel} />
         </div>

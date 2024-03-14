@@ -1,4 +1,4 @@
-import admin  from 'firebase-admin';
+import admin from 'firebase-admin';
 import dotenv from 'dotenv'
 dotenv.config()
 
@@ -16,9 +16,13 @@ const serviceAccountConfig = {
   universe_domain: process.env.FIREBASE_UNIVERSE_DOMAIN
 }
 
-
-admin.initializeApp({
-  credential: admin.credential.cert(serviceAccountConfig)
-});
+try {
+  admin.initializeApp({
+    credential: admin.credential.cert(serviceAccountConfig)
+  });
+  console.log("Firebase Auth configured")
+} catch (error) {
+  console.log(`Error on Firebase connection - ${error}`);
+}
 
 export default admin

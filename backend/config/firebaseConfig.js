@@ -16,13 +16,8 @@ const serviceAccountConfig = {
   universe_domain: process.env.FIREBASE_UNIVERSE_DOMAIN
 }
 
-try {
-  admin.initializeApp({
-    credential: admin.credential.cert(serviceAccountConfig)
-  });
-  console.log("Firebase Auth configured")
-} catch (error) {
-  console.log(`Error on Firebase connection - ${error}`);
-}
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccountConfig)
+});
 
 export default admin

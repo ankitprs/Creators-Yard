@@ -20,6 +20,7 @@ try {
   admin.initializeApp({
     credential: admin.credential.cert(serviceAccountConfig)
   });
+  console.log("Firebase Configed");
 } catch (error) {
   console.error(`Error ${error}`);
 }

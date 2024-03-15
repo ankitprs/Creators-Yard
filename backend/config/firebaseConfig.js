@@ -21,7 +21,7 @@ try {
     credential: admin.credential.cert(serviceAccountConfig)
   });
 } catch (error) {
-
+  console.error(`Error ${error}`);
 }
 
 

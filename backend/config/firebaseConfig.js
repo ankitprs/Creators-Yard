@@ -16,8 +16,13 @@ const serviceAccountConfig = {
   universe_domain: process.env.FIREBASE_UNIVERSE_DOMAIN
 }
 
-admin.initializeApp({
-  credential: admin.credential.cert(serviceAccountConfig)
-});
- 
+try {
+  admin.initializeApp({
+    credential: admin.credential.cert(serviceAccountConfig)
+  });
+} catch (error) {
+
+}
+
+
 export default admin

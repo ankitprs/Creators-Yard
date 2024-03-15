@@ -12,8 +12,6 @@ export const userAtom = atom({
     }
   })
 })
-
-
 // export const totalNoticationsSelector = selector({
 //   key: "totalNoticationSelector",
 //   get: ({ get }) => {

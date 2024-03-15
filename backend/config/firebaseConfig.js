@@ -19,5 +19,5 @@ const serviceAccountConfig = {
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccountConfig)
 });
-
+ 
 export default admin

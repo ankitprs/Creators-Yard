@@ -1,9 +1,12 @@
 import React, { useEffect } from 'react';
 import apiService from '../gcp/data';
 import { FcProcess } from "react-icons/fc";
+import { useNavigate } from "react-router-dom";
+import authService from '../gcp/auth'
 
 
 const Callback = () => {
+  const navigator = useNavigate()
   useEffect(() => {
     // Function to extract URL parameters
     const getParameterByName = (name, url) => {
@@ -19,13 +22,28 @@ const Callback = () => {
     // Extract access token from the callback URL
     const authorization_code = getParameterByName('code');
 
-    if (authorization_code) {
-      apiService.createChannel(authorization_code)
-      window.location.href = '/';
-    }
 
+    fetchUser(authorization_code)
 
   }, []);
+
+  async function fetchUser(authorization_code) {
+    const userData = await authService.getCurrentUser()
+    if (userData) {
+      // dispatch(login({ userData: userData }))
+      apiService.authToken = userData.token;
+    } else {
+      // dispatch(logout())
+    }
+    createCall(authorization_code)
+  }
+
+  async function createCall(authorization_code) {
+    if (authorization_code) {
+      await apiService.createChannel(authorization_code)
+      navigator('/dashboard')
+    }
+  }
 
   return (
     <div className="bg-gray-800 text-white min-h-screen flex items-center justify-center">

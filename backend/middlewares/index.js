@@ -15,6 +15,7 @@ const getAuthToken = async (req) => {
 
 const auth = async (req, res, next) => {
   try {
+    console.log(`call from this -> ${req}`);
     const authToken = await getAuthToken(req);
     const userInfo = await admin.auth()
       .verifyIdToken(authToken);
@@ -45,7 +46,10 @@ const isPremium = async (req, res, next) => {
 }
 
 const isOwner = async (req, res, next) => {
-  const { channel_id } = req.query
+  let { channel_id } = req.body
+  if (!channel_id) {
+    channel_id = req.query.channel_id
+  }
   try {
     const isOwner = await userController.isOwnerOfChannel(req.email_id, channel_id)
 

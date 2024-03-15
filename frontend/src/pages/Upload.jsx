@@ -5,7 +5,7 @@ import { ref, getDownloadURL, uploadBytesResumable } from "firebase/storage";
 import apiService from '../gcp/data';
 import { v4 as uuidv4 } from 'uuid';
 import { useParams } from 'react-router-dom';
-
+import { useNavigate } from "react-router-dom";
 
 const UploadPage = () => {
   const [videoSrc, setVideoSrc] = useState(null);
@@ -16,6 +16,7 @@ const UploadPage = () => {
   const [progressbar, setProgressbar] = useState(false)
   const [progresspercent, setProgresspercent] = useState(0);
   const { channel_id } = useParams()
+  const navigator = useNavigate()
 
 
   const handleFileChange = (event) => {
@@ -54,7 +55,7 @@ const UploadPage = () => {
 
         apiService.createUploadVideo(channel_id, videoId, title, description, "ankitprasad.119@gmail.com").then(() => {
           setProgressbar(false);
-
+          navigator('/dashboard')
         }).catch(() => {
           setProgressbar(false);
         })

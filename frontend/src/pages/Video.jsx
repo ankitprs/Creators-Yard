@@ -25,7 +25,6 @@ const VideoPage = () => {
   }, [])
 
   const publishVideo = async () => {
-    console.log('called');
     await apiService.publishVideoToYT(video_id, channel_id);
   }
 
@@ -41,7 +40,7 @@ const VideoPage = () => {
 
 
   return (
-    <div className="bg-gray-900 text-white min-h-screen p-6">
+    <div className="bg-gray-900 text-white p-6">
       {/* Video View */}
       <div className=" h-full w-full p-8 rounded-lg overflow-hidden mb-6">
         {/* <ReactPlayer

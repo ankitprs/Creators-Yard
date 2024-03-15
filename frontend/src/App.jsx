@@ -41,9 +41,9 @@ function App() {
   }
 
   return (
-    <div className='w-full block'>
+    <div className='w-full block h-full'>
       <Navbar />
-      <div className="flex h-screen bg-gray-700">
+      <div className="flex  min-h-screen bg-gray-700">
         <ChannelSidebar channels={channels} onAuthClick={oauthUrl} />
         <main className='w-full'>
           <Outlet />

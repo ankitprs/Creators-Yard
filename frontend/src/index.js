@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import ReactDOM from 'react-dom/client';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import reportWebVitals from './reportWebVitals';
@@ -42,7 +42,7 @@ const router = createBrowserRouter([
       {
         path: '/dashboard',
         element: (
-          <AuthLayout authentication>
+          <AuthLayout authentication={true}>
             {" "}
             <FirstPage />
           </AuthLayout>
@@ -51,7 +51,7 @@ const router = createBrowserRouter([
       {
         path: '/dashboard/channel/:channel_id',
         element: (
-          <AuthLayout authentication>
+          <AuthLayout authentication={true}>
             {" "}
             <Dashboard />
           </AuthLayout>
@@ -61,7 +61,7 @@ const router = createBrowserRouter([
       {
         path: '/dashboard/:channel_id/upload',
         element: (
-          <AuthLayout authentication>
+          <AuthLayout authentication={true}>
             {" "}
             <UploadPage />
           </AuthLayout>
@@ -70,7 +70,7 @@ const router = createBrowserRouter([
       {
         path: '/dashboard/channel/:channel_id/video/:video_id',
         element: (
-          <AuthLayout authentication>
+          <AuthLayout authentication={true}>
             {" "}
             <VideoPage />
           </AuthLayout>
@@ -79,7 +79,7 @@ const router = createBrowserRouter([
       {
         path: '/dashboard/channel/:channel_id/editors',
         element: (
-          <AuthLayout authentication>
+          <AuthLayout authentication={true}>
             {" "}
             <EditorList />
           </AuthLayout>
@@ -111,7 +111,9 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <RecoilRoot>
-      <RouterProvider router={router} />
+      <Suspense fallback={<div>Loding...</div>}>
+        <RouterProvider router={router} />
+      </Suspense>
     </RecoilRoot>
   </React.StrictMode>
 );

@@ -4,8 +4,6 @@ import { auth } from '../conf/conf';
 
 const HOST_URL = process.env.REACT_APP_BACKEND_URL
 
-const UserEmail_Id = "ankitprasad.119@gmail.com"
-
 
 class APIService {
 
@@ -113,8 +111,7 @@ class APIService {
 
   createChannel = async (authorization_code) => {
     const requestData = {
-      authorization_code: authorization_code,
-      email_id: UserEmail_Id,
+      authorization_code: authorization_code
     }
     const apiUrl = HOST_URL + '/channel/create'
     this.authenticatedApiCall('POST', apiUrl, requestData)

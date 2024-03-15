@@ -24,7 +24,6 @@ const Login = () => {
 
   const handleGoogleLogin = async () => {
     const user = await authService.login()
-    if (user != null) navigate('/dashboard')
   }
 
   return (

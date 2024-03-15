@@ -1,4 +1,5 @@
 import React from 'react';
+import VideoThumbnail from '../assets/videothumbnail.png'
 
 const VideoCard = ({ video }) => {
   // Trim the description to a certain length (e.g., 100 characters)
@@ -10,7 +11,7 @@ const VideoCard = ({ video }) => {
     <div className="flex h-72 w-full bg-gray-900 text-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300 mb-4">
       <img
         className="w-full h-full object-cover bg-black"
-        src={video.thumbnailUrl}
+        src={VideoThumbnail}
         alt="thumbnail"
       />
       <div className="w-full h-full p-4">

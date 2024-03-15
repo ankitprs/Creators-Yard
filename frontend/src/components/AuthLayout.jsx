@@ -9,16 +9,17 @@ function Protected({
   const navigate = useNavigate()
   const [loader, setLoader] = useState(true)
   const user = useRecoilValue(userAtom)
-  const authStatus = user != null
+
 
   useEffect(() => {
+    const authStatus = user != null
     if (authentication && authStatus !== authentication) {
       navigate("/login")
     } else if (!authentication && authStatus !== authentication) {
       navigate("/dashboard")
     }
     setLoader(false)
-  }, [authStatus, navigate, authentication])
+  }, [user, navigate, authentication])
 
   return (
     loader ? <h1> loading...</h1> : <div className='w-full'>{children}</div>

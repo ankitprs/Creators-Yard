@@ -6,7 +6,7 @@ const VideoCard = ({ video }) => {
   const trimmedDescription = video.description.length > 100
     ? video.description.substring(0, 100) + '...'
     : video.description;
-
+ 
   return (
     <div className="flex h-72 w-full bg-gray-900 text-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300 mb-4">
       <img

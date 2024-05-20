@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import EditorCard from '../components/EditorCard';
+import EditorCard from '../components/cards/EditorCard';
 import { FaPlus } from 'react-icons/fa';
 import apiService from '../gcp/data';
 import { useNavigate, useParams } from 'react-router-dom';

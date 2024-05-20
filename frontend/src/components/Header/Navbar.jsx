@@ -21,7 +21,6 @@ const Navbar = () => {
     }
   };
 
-  console.log(`User Atom Value -> ${JSON.stringify(user)}`);
 
   useEffect(() => {
     document.addEventListener('mousedown', handleClickOutside);
@@ -34,30 +33,22 @@ const Navbar = () => {
     window.open("https://billing.stripe.com/p/login/test_8wM3g4bir39P6vS4gg")
   }
   function onClickLogout() {
-    try {
-      authService.logout()
-      setUser(null);
-    } catch (error) {
-      console.log('error signing out: ', error);
-    }
+    authService.logout()
+    setUser(null);
   }
 
   return (
-    <nav className="bg-gray-900 text-white p-4">
-
-      <div className="container mx-auto flex justify-between items-center">
+    <nav className=" text-white h-[54px] border-[#30363C] border-b-[1px] px-[20px]">
+      <div className="flex justify-between items-center h-full">
         <div className='flex'>
           <button
-            data-drawer-target="default-sidebar"
-            data-drawer-toggle="default-sidebar"
-            aria-controls="default-sidebar"
             type="button"
-            className="inline-flex mx-4 items-center p-2  ms-3  rounded-lg hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+            className="inline-flex mx-[10px] items-center rounded-lg "
             onClick={() => { uiSidebarState(e => !e) }}
           >
-            <span className="sr-only">Open sidebar</span>
+            {/* <img src='.//creactor_yard_icon.png' alt='icon' /> */}
             <svg
-              className="w-6 h-6"
+              className="w-[16px] h-[16pxs]"
               aria-hidden="true"
               fill="currentColor"
               viewBox="0 0 20 20"
@@ -70,22 +61,18 @@ const Navbar = () => {
               />
             </svg>
           </button>
-
-          <h1 className="text-2xl font-bold" onClick={() => navigator('/dashboard')}>Creator Yard</h1>
+          <h1 className="text-[16px] font-semibold" onClick={() => navigator('/dashboard')}>Creator Yard</h1>
         </div>
 
-
         <div className="relative" ref={dropdownRef}>
-          <div className='flex' onClick={() => setIsOpen(!isOpen)}>
-            <span className="text-white mx-3 text-center h-8">{user?.name}</span>
-            <button
-              className="w-8 h-8 bg-gray-700 rounded-full flex items-center justify-center"
+          <button className='flex' onClick={() => setIsOpen(!isOpen)}>
+            <div
+              className="w-8 h-8 rounded-full flex items-center justify-center"
             >
               <img src={user?.icon_url} alt="Profile" className="w-8 h-8 rounded-full" />
 
-            </button>
-          </div>
-
+            </div>
+          </button>
 
           {isOpen && (
             <div className="absolute top-full mt-2 w-40 bg-gray-700 border border-gray-600 rounded-lg shadow-lg">

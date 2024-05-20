@@ -2,33 +2,35 @@ import axios from 'axios';
 import authService from './auth';
 import { auth } from '../conf/conf';
 
-const HOST_URL = process.env.REACT_APP_BACKEND_URL
+const HOST_URL = import.meta.env.VITE_APP_BACKEND_URL
 
 
 class APIService {
 
-  authToken = "";
+  authToken = null;
+
+  getAuthToken = async () => {
+    if (this.authToken != null) {
+      return this.authToken
+    }
+    const userData = await authService.getCurrentUser()
+    this.authToken = userData.token;
+    return this.authToken
+  }
 
   authenticatedApiCall = async (REQUEST_TYPE, endpoint, requestBody = {}, params = {}) => {
-    try {
-      const token = this.authToken;
-      console.log(`TOKEN -> ${token}`)
-      //await auth.currentUser.getIdToken()
-      if (REQUEST_TYPE == 'POST') {
-        return await axios.post(endpoint, requestBody, {
-          headers: { authorization: `Bearer ${token}` },
-          params: params
-        })
-      } else {
-        return await axios.get(endpoint, {
-          headers: { authorization: `Bearer ${token}` },
-          params: params
-        }
-        )
+    const token = await this.getAuthToken();
+    if (REQUEST_TYPE == 'POST') {
+      return await axios.post(endpoint, requestBody, {
+        headers: { authorization: `Bearer ${token}` },
+        params: params
+      })
+    } else {
+      return await axios.get(endpoint, {
+        headers: { authorization: `Bearer ${token}` },
+        params: params
       }
-    } catch (error) {
-      console.log(error);
-      return null
+      )
     }
   }
 
@@ -36,13 +38,8 @@ class APIService {
   // return type formate - {id, name, iconUrl}
   getChannels = async () => {
     const endpoint = `${HOST_URL}/channel/list_channels`
-    try {
-      const response = await this.authenticatedApiCall('GET', endpoint)
-      return response.data
-    } catch (err) {
-      console.log(err);
-      return [];
-    }
+    const response = await this.authenticatedApiCall('GET', endpoint)
+    return response.data
   }
 
   getEditorsList = async (channel_id) => {
@@ -93,20 +90,20 @@ class APIService {
     }
   }
 
-  putAuthToken = (token) => {
-    this.authToken = token;
+  createProject = async (channel_id, project_name) => {
+    const endpoint = HOST_URL + "/project"
+    const response = await this.authenticatedApiCall("POST", endpoint, {
+      channel_id,
+      project_name
+    })
+    return response.data
   }
 
   // CREATE CHANNEL 
   getOauth2Url = async () => {
-    try {
-      const endpoint = HOST_URL + "/channel/oauth2_url"
-      const response = await this.authenticatedApiCall('POST', endpoint)
-      return response.data.authorizationUrl;
-    } catch (err) {
-      console.error(err);
-      return err;
-    }
+    const endpoint = HOST_URL + "/channel/oauth2_url"
+    const response = await this.authenticatedApiCall('POST', endpoint)
+    return response.data.authorizationUrl;
   }
 
   createChannel = async (authorization_code) => {
@@ -161,14 +158,6 @@ class APIService {
       }).catch(error => {
         console.error('Error:', error);
       });
-  }
-
-  addVideoMetadata = async (video_id, title, description, video_s3_url, channel_id) => {
-    try {
-
-    } catch (error) {
-
-    }
   }
 
   // === PUBLISH VIDEO  === 

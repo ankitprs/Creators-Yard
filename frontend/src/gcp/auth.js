@@ -37,7 +37,6 @@ export class AuthService {
         icon_url: currUser.photoURL,
         token: currUser.stsTokenManager.accessToken,
       };
-      apiService.putAuthToken(userData.token);
       return userData;
     } catch (error) {
       console.log("Firebase Service :: getCurrentUser:: error", error);
@@ -46,7 +45,7 @@ export class AuthService {
   }
 
   getPaymentUrl() {
-    return process.env.REACT_APP_PAYMENT_URL
+    return import.meta.env.VITE_APP_PAYMENT_URL
   }
 
   // return formate - bool

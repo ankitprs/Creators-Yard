@@ -53,10 +53,10 @@ Ensure that the following environment variables are set:
 
 Frontend (.env file in the frontend directory)
 ```
-REACT_APP_FIREBASE_API_KEY
-REACT_APP_FIREBASE_AUTH_DOMAIN
-REACT_APP_FIREBASE_PROJECT_ID
-REACT_APP_BACKEND_URL (URL where the backend is hosted)
+VITE_APP_FIREBASE_API_KEY
+VITE_APP_FIREBASE_AUTH_DOMAIN
+VITE_APP_FIREBASE_PROJECT_ID
+VITE_APP_BACKEND_URL (URL where the backend is hosted)
 ```
 
 

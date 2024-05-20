@@ -1,0 +1,7 @@
+const REACT_QUERY_CHANNELS = "channel_list"
+const REACT_QUERY_PROJECTS = "project_list"
+const REACT_QUERY_VIDEOS = "video_list"
+
+
+
+export { REACT_QUERY_CHANNELS, REACT_QUERY_VIDEOS, REACT_QUERY_PROJECTS }

@@ -30,10 +30,8 @@ const Callback = () => {
   async function fetchUser(authorization_code) {
     const userData = await authService.getCurrentUser()
     if (userData) {
-      // dispatch(login({ userData: userData }))
       apiService.authToken = userData.token;
     } else {
-      // dispatch(logout())
     }
     createCall(authorization_code)
   }
@@ -46,7 +44,7 @@ const Callback = () => {
   }
 
   return (
-    <div className="bg-gray-800 text-white min-h-screen flex items-center justify-center">
+    <div className=" text-white min-h-screen flex items-center justify-center">
       <div className="text-center">
         <FcProcess className='w-full h-20 m-auto' />
         <h1 className="text-4xl font-bold mb-4">Processing</h1>

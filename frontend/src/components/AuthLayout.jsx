@@ -22,7 +22,8 @@ function Protected({
   }, [user, navigate, authentication])
 
   return (
-    loader ? <h1> loading...</h1> : <div className='w-full'>{children}</div>
+    loader ? <h1> loading...</h1> :
+      <div className='w-full'>{children}</div>
   )
 }
 

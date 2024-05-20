@@ -68,7 +68,7 @@ const UploadPage = () => {
   }
 
   return (
-    <div className="w-full m-auto bg-gray-900 text-white min-h-screen p-6 flex flex-col items-center justify-center">
+    <div className="w-full m-auto   min-h-screen p-6 flex flex-col items-center justify-center">
       {/* Title */}
       <h1 className="text-3xl font-bold mb-6">Upload Video For YouTube</h1>
       {/* <UploadPopup /> */}
@@ -99,7 +99,7 @@ const UploadPage = () => {
       <input
         type="text"
         placeholder="Enter video title..."
-        className="w-full max-w-md p-3 bg-gray-800 rounded-lg mb-4 placeholder-gray-500 focus:outline-none focus:border-blue-500 border-2 border-gray-700"
+        className="w-full max-w-md p-3 bg-[#0E1117] rounded-lg mb-4 placeholder-gray-500 focus:outline-none focus:border-blue-500 border-2 border-gray-700"
         value={title}
         onChange={(e) => setTitle(e.target.value)}
       />
@@ -108,7 +108,7 @@ const UploadPage = () => {
       <textarea
         placeholder="Enter video description..."
         rows={4}
-        className="w-full max-w-md p-3 bg-gray-800 rounded-lg mb-4 placeholder-gray-500 focus:outline-none focus:border-blue-500 border-2 border-gray-700"
+        className="w-full max-w-md p-3 bg-[#0E1117] rounded-lg mb-4 placeholder-gray-500 focus:outline-none focus:border-blue-500 border-2 border-gray-700"
         value={description}
         onChange={(e) => setDescription(e.target.value)}
       />

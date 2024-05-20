@@ -1,0 +1,76 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  emailId           String             @id
+  displayName       String?
+  photoUrl          String?
+  subscriptionStart DateTime?
+  subscriptionEnd   DateTime?
+  Channel           Channel[]
+  Project           Project[]
+  Video             Video[]
+  EditorsOnChannel  EditorsOnChannel[]
+}
+
+model Channel {
+  channelId        String             @id @default(uuid())
+  channelName      String
+  channelIconUrl   String
+  owner            User               @relation(fields: [ownerEmailId], references: [emailId])
+  accessToken      String
+  refreshToken     String
+  expiresId        String
+  ownerEmailId     String
+  Project          Project[]
+  Video            Video[]
+  EditorsOnChannel EditorsOnChannel[]
+}
+
+model EditorsOnChannel {
+  editor           User     @relation(fields: [editorEmailId], references: [emailId])
+  channel          Channel  @relation(fields: [channelChannelId], references: [channelId])
+  assignedAt       DateTime @default(now())
+  editorEmailId    String
+  channelChannelId String
+
+  @@id([editorEmailId, channelChannelId])
+}
+
+model Project {
+  projectId          String   @id @default(uuid())
+  projectName        String
+  channel            Channel  @relation(fields: [channelChannelId], references: [channelId])
+  createdTime        DateTime
+  createdUser        User     @relation(fields: [createdUserEmailId], references: [emailId])
+  createdUserEmailId String
+  Video              Video[]
+  channelChannelId   String
+  status             Int      @default(1)
+}
+
+model Video {
+  videoId            String  @id @default(uuid())
+  channel            Channel @relation(fields: [channelChannelId], references: [channelId])
+  title              String
+  description        String?
+  videoRef           String?
+  createdUser        User    @relation(fields: [createdUserEmailId], references: [emailId])
+  project            Project @relation(fields: [projectProjectId], references: [projectId])
+  projectProjectId   String
+  channelChannelId   String
+  createdUserEmailId String
+  status             Int     @default(1)
+}

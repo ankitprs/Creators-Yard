@@ -15,7 +15,7 @@ const FirstPage = () => {
 
 
   return (
-    <div className="m-auto bg-gray-900  text-white min-h-screen  ">
+    <div className="m-auto  justify-center text-white min-h-screen  ">
       <div className='m-auto max-w-screen-sm flex flex-col items-center justify-center'>
 
         <img className="m-auto w-80 h-80 object-cover mb-8 rounded-3xl" src={homeImage} alt="Top Image" />

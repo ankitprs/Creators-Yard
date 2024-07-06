@@ -18,7 +18,6 @@ function HeroSection() {
               <CTAButton />
             </div>
           </div>
-
           <div className='flex flex-col items-start  max-w-[400px]'>
             <Image src={"/images/front_screen_icon.png"} alt='' width={497} height={497} className='rounded-3xl w-full h-fit mt-[30px]' />
           </div>

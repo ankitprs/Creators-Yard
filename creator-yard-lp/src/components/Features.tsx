@@ -56,7 +56,7 @@ const FeatureItem = ({ image, title, subTitle, details, isImageOnRight }: Featur
 function Features() {
   const assets: FeatureItemType[] = [
     {
-      image: "/images/magic_chat.svg", title: "Creator", subTitle: "With Magic Chat, use contextual search and QnA to use Podnotes as an assistant to glance through all your podcasts at once.",
+      image: "/images/ss.svg", title: "Creator", subTitle: "With Magic Chat, use contextual search and QnA to use Podnotes as an assistant to glance through all your podcasts at once.",
       details: [
         { detailName: "Chat with all the Podcasts", detailDescription: "Effortlessly produce compelling articles that captivate your audience." },
         { detailName: "Chat with an Individual Podcast", detailDescription: "With AI by your side, you can generate blog content that not only informs but also resonates with your readers." },
@@ -65,7 +65,7 @@ function Features() {
       isImageOnRight: true
     },
     {
-      image: "/images/audiogram.svg", title: "Editor", subTitle: "Create snippets of your podcast into easily shareable and visually appealing asset to share on your social media",
+      image: "/images/editorss.svg", title: "Editor", subTitle: "Create snippets of your podcast into easily shareable and visually appealing asset to share on your social media",
       details: [
         { detailName: "Images", detailDescription: "Add high-quality images to illustrate your narrative, reinforce key points, and enhance the overall visual appeal of your content." },
         { detailName: "Videos", detailDescription: "Embed videos to provide in-depth explanations, tutorials, or dynamic storytelling that resonates with your audience." },

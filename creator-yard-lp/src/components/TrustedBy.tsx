@@ -20,7 +20,6 @@ function TrustedBy() {
         <div className='flex  my-[50px]'>
           {
             companies.map(company => <div key={company.id}>
-
             </div>)
           }
         </div>

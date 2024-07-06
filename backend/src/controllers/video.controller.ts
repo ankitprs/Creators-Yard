@@ -1,7 +1,6 @@
 import { prisma } from '../config/prismaClient';
 
 
-
 const getVideosFromChannelId = async (channel_id: string) => {
   return prisma.video.findMany({
     where: {
@@ -36,6 +35,5 @@ const uploadVideo = async (video_id: string, channel_id: string, project_id: str
 const getPresigninUrl = async (video_id: string) => {
   return "presignedGETURL"
 }
-
 
 export { getVideoFromVideoId, getPresigninUrl, getVideosFromChannelId, uploadVideo };

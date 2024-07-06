@@ -22,10 +22,10 @@ class MailService {
   sendMailUsingBrevo = async (mailContent: string, to_email_id: string, subject: string) => {
 
     // var apiInstance = new SibApiV3Sdk.TransactionalEmailsApi();
-    // const sender = {
-    //   email: "support@creatorsyard.com",
-    //   name: "support"
-    // }
+    const sender = {
+      email: "support@creatorsyard.com",
+      name: "support"
+    }
 
     // const receivers = [
     //   {

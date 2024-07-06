@@ -264,16 +264,11 @@ function PricingBlock() {
     <section>
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
         <div className="pb-12 md:pb-20">
-
           <div className="relative rounded py-10 px-8 md:py-16 md:px-12 shadow-2xl overflow-hidden" data-aos="zoom-y-out">
-
-
             <div className="relative flex flex-col justify-between items-center">
-
               <div className="text-center lg:max-w-xl">
                 <h3 className="mb-2 text-4xl m-auto">Pricing</h3>
                 <h3 className=" mb-2 text-8xl m-aut p-3">₹ 3,999<span className=' text-lg'> / Month</span></h3>
-
                 <button className="w-full px-28 py-3 rounded-lg text-white bg-blue-600 hover:bg-blue-700 shadow" onClick={onClickLogin}>Join Now</button>
                 <div className='text-left p-4 my-3'>
                   <li>Ideal for individuals and small teams</li>
@@ -284,11 +279,8 @@ function PricingBlock() {
                 </div>
 
               </div>
-
             </div>
-
           </div>
-
         </div>
       </div>
     </section >
@@ -401,27 +393,16 @@ function Footer() {
 }
 
 const LandingPage = () => {
-  const navigate = useNavigate();
 
   return (
     <div className="flex flex-col min-h-screen overflow-hidden">
-
-      {/*  Site header */}
       <Header />
-
-      {/*  Page content */}
       <main className="flex-grow">
-
-        {/*  Page sections */}
         <HeroHome />
         <FeaturesBlocks />
         <PricingBlock />
-
       </main>
-
-      {/*  Site footer */}
       <Footer />
-
     </div>
   );
 };

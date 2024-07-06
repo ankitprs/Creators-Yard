@@ -12,6 +12,4 @@ const closeProject = async () => {
 
 }
 
-
-
 export { getProjectList, createProject, closeProject }

@@ -1,4 +1,3 @@
-import React from 'react';
 import apiService from '../gcp/data'
 import homeImage from '../assets/open_icon.jpg'
 

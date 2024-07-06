@@ -5,7 +5,6 @@ const F_BUCKET_NAME = "channelnest.appspot.com"
 
 
 class GcpService {
-
   async getVideoMetadata(signedUrl: string) {
     // 2. Get video metadata from S3 object
     // const headObjectResponse = await axios.head(signedUrl);
@@ -19,7 +18,6 @@ class GcpService {
     const fileRef = admin.storage().bucket(`${F_BUCKET_NAME}`).file(video_ref)
     return await getDownloadURL(fileRef)
   }
-
 }
 
 const gcpService = new GcpService

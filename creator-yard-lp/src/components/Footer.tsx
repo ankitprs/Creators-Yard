@@ -24,16 +24,16 @@ function Footer() {
       title: "Resources",
       links: [
         {
-          name: "Discover Top Podcasts",
-          urlLink: ""
+          name: "Youtube API",
+          urlLink: "https://developers.google.com/youtube/v3/guides/uploading_a_video"
         },
         {
-          name: "ChatGPT Prompts for your Podcasts",
-          urlLink: ""
+          name: "Google Cloud Storage",
+          urlLink: "https://cloud.google.com/storage"
         },
         {
-          name: "Podcast Growth Blog",
-          urlLink: ""
+          name: "PostgreSQL",
+          urlLink: "https://supabase.com/docs/guides/database/overview"
         },
       ]
     },
@@ -42,23 +42,15 @@ function Footer() {
       links: [
         {
           name: "Features",
-          urlLink: ""
+          urlLink: "#features"
         },
         {
           name: "Pricing",
-          urlLink: ""
+          urlLink: "#pricing"
         },
         {
-          name: "Audiogram",
-          urlLink: ""
-        },
-        {
-          name: "Magic Chat",
-          urlLink: ""
-        },
-        {
-          name: "Use-Cases",
-          urlLink: ""
+          name: "FAQ's",
+          urlLink: "#faq"
         },
       ]
     },
@@ -67,61 +59,29 @@ function Footer() {
       links: [
         {
           name: "Privacy Policy",
-          urlLink: ""
+          urlLink: "/privacy-policy"
         },
         {
           name: "Terms and conditions",
-          urlLink: ""
+          urlLink: "/terms-and-conditions"
         },
         {
           name: "Refund Policy",
-          urlLink: ""
+          urlLink: "/refund-policy"
         },
         {
           name: "Contact Us",
-          urlLink: ""
+          urlLink: "mailto:ankitpr2001@gmail.com"
         },
       ]
     },
     {
-      title: "Links",
+      title: "Address",
       links: [
         {
-          name: "Free Transcript Generator",
+          name: "Dr B.K. Madhusudhan Neurology Clinics E Block, Kodigehalli Main Rd, Sahakar Nagar, Bengaluru, Karnataka 560092, India",
           urlLink: ""
-        },
-        {
-          name: "Free Podcast Summary Generator",
-          urlLink: ""
-        },
-        {
-          name: "Free Podcast Show Notes Generator",
-          urlLink: ""
-        },
-        {
-          name: "Free Podcast Title Generator",
-          urlLink: ""
-        },
-        {
-          name: "Free Podcast Blog Generator",
-          urlLink: ""
-        },
-        {
-          name: "Free Youtube Video to Content Generator",
-          urlLink: ""
-        },
-        {
-          name: "Free Audio to Content Generator",
-          urlLink: ""
-        },
-        {
-          name: "Free Media File to Content Generator",
-          urlLink: ""
-        },
-        {
-          name: "Free RSS Feed Summary Generator",
-          urlLink: ""
-        },
+        }
       ]
     },
   ]
@@ -146,14 +106,11 @@ function Footer() {
       <div className='flex flex-col max-w-[1300px] p-[50px]  '>
         <div className='flex  flex-row mb-[120px] '>
           <div className='w-[300px] flex flex-col '>
-            <div className='flex'>
-              <Image src={"/images/logo.svg"} width={40} height={40} alt='icon' />
-              <div className='flex flex-col'>
-                <p className='text-[18px] font-semibold'>PODNOTES</p>
-                <p className='text-[10px] font-extralight'>A Wudpecker partner</p>
-              </div>
+            <div className='flex items-center'>
+              <Image src={"/images/logo.png"} width={40} height={40} alt='icon' />
+              <p className='text-[22px] font-semibold'>reator Yard</p>
             </div>
-            <p className=' my-[35px] text-[#4A4C52]'>a 1811 Labs product</p>
+            <p className=' my-[35px] text-[#4A4C52]'>Labs  product</p>
             <div className='flex'>
               {
                 socialMediaLinks.map(socialMediaLink => <div key={socialMediaLink.icon}>

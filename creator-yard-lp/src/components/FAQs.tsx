@@ -12,7 +12,7 @@ import { Headline } from './Headline'
 
 function FAQs() {
   const questions = [
-    { id: 1, question: "How do I contact support?", answer: "For any queries or assistance, please email us at hello@podnotes.app. We strive to respond within 24 hours" },
+    { id: 1, question: "How do I contact support?", answer: "For any queries or assistance, please email us at ankitpr2001@gmail.com We strive to respond within 24 hours" },
     { id: 2, question: "What languages does Podnotes support?", answer: "Podnotes supports 19 languages including " },
     { id: 3, question: "Can I generate Unlimited Content?", answer: "Yes, you can generate unlimited content on any of the paid plans." },
     { id: 4, question: "Is there a Free Plan?", answer: "Yes, all users get to try out Podnotes with 50 mins of transcription time for free" },

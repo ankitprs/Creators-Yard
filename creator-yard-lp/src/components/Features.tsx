@@ -38,7 +38,7 @@ const FeatureItem = ({ image, title, subTitle, details, isImageOnRight }: Featur
   }
 
   return (
-    <div className='flex flex-row my-[80px]'>
+    <div className='flex flex-row my-[10px]'>
       {
         isImageOnRight ? <>
           <TextSection />
@@ -56,20 +56,20 @@ const FeatureItem = ({ image, title, subTitle, details, isImageOnRight }: Featur
 function Features() {
   const assets: FeatureItemType[] = [
     {
-      image: "/images/ss.svg", title: "Creator", subTitle: "With Magic Chat, use contextual search and QnA to use Podnotes as an assistant to glance through all your podcasts at once.",
+      image: "/images/ss.svg", title: "Creators", subTitle: "Efficient Collaboration: Easily invite editors and collaborate on projects in real-time.",
       details: [
-        { detailName: "Chat with all the Podcasts", detailDescription: "Effortlessly produce compelling articles that captivate your audience." },
-        { detailName: "Chat with an Individual Podcast", detailDescription: "With AI by your side, you can generate blog content that not only informs but also resonates with your readers." },
-        { detailName: "Create Captivating Social media updates", detailDescription: "Transform your social media presence with captivating updates that spark conversations and drive engagement." }
+        { detailName: "Real-time Collaboration", detailDescription: "Work together with your editors in real-time, making instant changes and improvements to your content without delays." },
+        { detailName: "Direct Publishing", detailDescription: "Publish your final content directly to YouTube from our platform, eliminating the need for additional downloads and uploads." },
+        { detailName: "Content Management", detailDescription: "Organize and manage all your content in one place, ensuring easy access and tracking of your projects and their progress." },
       ],
       isImageOnRight: true
     },
     {
-      image: "/images/editorss.svg", title: "Editor", subTitle: "Create snippets of your podcast into easily shareable and visually appealing asset to share on your social media",
+      image: "/images/editorss.svg", title: "Editors", subTitle: "Provide editors with the tools they need to enhance and streamline the content creation process.",
       details: [
-        { detailName: "Images", detailDescription: "Add high-quality images to illustrate your narrative, reinforce key points, and enhance the overall visual appeal of your content." },
-        { detailName: "Videos", detailDescription: "Embed videos to provide in-depth explanations, tutorials, or dynamic storytelling that resonates with your audience." },
-        { detailName: "Infographics", detailDescription: "Present complex information in a visually appealing and easily digestible format through infographics." }
+        { detailName: "Efficient Review System", detailDescription: "Review and edit content seamlessly with integrated tools designed for quick feedback and easy implementation of changes." },
+        { detailName: "Version Control", detailDescription: "Keep track of all edits and versions of the content, allowing for easy rollbacks and comparisons between different stages of the project." },
+        { detailName: "Task Assignment", detailDescription: "Assign specific tasks and deadlines to editors, ensuring a structured and timely workflow for all content projects." },
       ],
       isImageOnRight: false
     },

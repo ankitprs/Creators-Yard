@@ -38,7 +38,7 @@ const FeatureItem = ({ image, title, subTitle, details, isImageOnRight }: Featur
   }
 
   return (
-    <div className='flex flex-row my-[10px]'>
+    <div className='flex sm:flex-row my-[10px] flex-col '>
       {
         isImageOnRight ? <>
           <TextSection />
@@ -82,7 +82,7 @@ function Features() {
         headline='Features'
         subHeading="Delve into a comprehensive display of our platform's capabilities"
       />
-      <div className='grid  my-[50px]'>
+      <div className='  my-[50px] grid'>
         {
           assets.map(asset => <div key={asset.title} className='flex  items-center'>
             <FeatureItem image={asset.image} title={asset.title} subTitle={asset.subTitle} details={asset.details} isImageOnRight={asset.isImageOnRight} />

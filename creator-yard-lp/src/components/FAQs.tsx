@@ -37,7 +37,7 @@ function FAQs() {
         headline="FAQ's"
         subHeading="Don't worry, we got you. Here are some answers for your questions."
       />
-      <Accordion type="single" collapsible className="w-[800px] my-[40px]  bg-[#F4F4EE] px-[10px] pt-[10px] rounded-[20px]">
+      <Accordion type="single" collapsible className="sm:w-[800px] my-[40px]  bg-[#F4F4EE] px-[10px] pt-[10px] rounded-[20px]">
         {
           questions.map((question) => <div key={question.id}>
             <FAQuestion id={question.id} question={question.question} answer={question.answer} />

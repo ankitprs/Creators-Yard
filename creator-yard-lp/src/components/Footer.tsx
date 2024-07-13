@@ -122,7 +122,7 @@ function Footer() {
             </div>
 
           </div>
-          <div className='flex flex-wrap w-[716px]'>
+          <div className='flex flex-wrap sm:w-[716px]'>
             {
               links.map(link => <div key={link.title}>
                 <Links title={link.title} links={link.links} />

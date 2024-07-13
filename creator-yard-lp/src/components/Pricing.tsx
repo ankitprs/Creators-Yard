@@ -51,7 +51,7 @@ function Pricing() {
         headline='Pricing Plans'
         subHeading='You can book a demo for free' />
 
-      <div className='flex items-end my-[40px]'>
+      <div className='flex items-end my-[40px] sm:flex-row flex-col'>
         {
           plans.map(plan => <div key={plan.planName}>
             <PricingCard planName={plan.planName} planLinkUrl={plan.planLinkUrl} planPrice={plan.planPrice} duration={plan.duration} isHighlighted={plan.isHighlighted} />
